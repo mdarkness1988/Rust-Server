@@ -64,8 +64,8 @@ if [ "$RUST_START_MODE" = "2" ]; then
 	if [ ! -f "/steamcmd/rust/RustDedicated" ]; then
 		# Install Rust from install.txt
 		echo "Installing Rust.. (this might take a while, be patient)"
-		bash /steamcmd/steamcmd.sh +runscript /install.txt
-		#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +runscript /install.txt | tee /dev/stdout)
+		bash /steamcmd/steamcmd.sh +login $STEAMID +runscript /install.txt
+		#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +login $STEAMID +runscript /install.txt | tee /dev/stdout)
 		#STEAMCMD_ERROR=$(echo $STEAMCMD_OUTPUT | grep -q 'Error')
 		#if [ ! -z "$STEAMCMD_ERROR" ]; then
 		#	echo "Exiting, steamcmd install or update failed: $STEAMCMD_ERROR"
@@ -77,8 +77,8 @@ if [ "$RUST_START_MODE" = "2" ]; then
 else
 	# Install/update Rust from install.txt
 	echo "Installing/updating Rust.. (this might take a while, be patient)"
-	bash /steamcmd/steamcmd.sh +runscript /install.txt
-	#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +runscript /install.txt | tee /dev/stdout)
+	bash /steamcmd/steamcmd.sh +login $STEAMID +runscript /install.txt
+	#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +login $STEAMID +runscript /install.txt | tee /dev/stdout)
 	#STEAMCMD_ERROR=$(echo $STEAMCMD_OUTPUT | grep -q 'Error')
 	#if [ ! -z "$STEAMCMD_ERROR" ]; then
 	#	echo "Exiting, steamcmd install or update failed: $STEAMCMD_ERROR"
@@ -188,7 +188,7 @@ if [ "$LOGROTATE_ENABLED" = "1" ]; then
 	echo "Log rotation enabled!"
 
 	# Log to stdout by default
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND -logfile /dev/stdout"
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND -logfile /steamcmd/rust/stdout.txt"
 	echo "Using startup arguments: $RUST_SERVER_STARTUP_ARGUMENTS"
 
 	# Create the logging directory structure
@@ -217,9 +217,9 @@ cd /steamcmd/rust
 # Run the server
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then
-	unbuffer /steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+	unbuffer /steamcmd/rust/RustDedicated -batchmode -load -logfile /steamcmd/rust/stdout.txt $RUST_STARTUP_COMMAND +server.secure "$RUST_SERVER_SECURE" +fps.limit $RUST_SERVER_FPS +server.updatebatch $RUST_SERVER_UPDATEBATCH +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
+	/steamcmd/rust/RustDedicated -batchmode -load -logfile /steamcmd/rust/stdout.txt $RUST_STARTUP_COMMAND +server.secure "$RUST_SERVER_SECURE" +fps.limit $RUST_SERVER_FPS +server.updatebatch $RUST_SERVER_UPDATEBATCH +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 &
 fi
 
 child=$!
