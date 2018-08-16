@@ -27,6 +27,7 @@ RUN curl -sL https://github.com/Facepunch/webrcon/archive/24b0898d86706723d52bb4
 
 # Customize the webrcon package to fit our needs
 ADD fix_conn.sh /tmp/fix_conn.sh
+RUN chmod +x /fix_conn.sh
 
 # Create and set the steamcmd folder as a volume
 RUN mkdir -p /steamcmd/rust
@@ -56,6 +57,7 @@ RUN ln -s /rcon_app/app.js /usr/bin/rcon
 
 # Add the steamcmd installation script
 ADD install.txt /install.txt
+RUN chmod +x /install.txt
 
 # Copy the Rust startup script
 ADD start_rust.sh /start.sh
