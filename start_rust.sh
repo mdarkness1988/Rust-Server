@@ -46,6 +46,13 @@ if [ ! -d "/steamcmd/rust" ]; then
 	mkdir -p /steamcmd/rust
 fi
 
+echo "" > install.txt
+echo "@sSteamCmdForcePlatformType linux" >> install.txt
+echo "login $STEAMID" >> install.txt
+echo "force_install_dir /steamcmd/rust" >> install.txt
+echo "app_info_update 1" >> install.txt
+echo "app_update 258550 validate" >> install.txt
+
 # Install/update steamcmd
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
@@ -64,8 +71,8 @@ if [ "$RUST_START_MODE" = "2" ]; then
 	if [ ! -f "/steamcmd/rust/RustDedicated" ]; then
 		# Install Rust from install.txt
 		echo "Installing Rust.. (this might take a while, be patient)"
-		bash /steamcmd/steamcmd.sh "+@sSteamCmdForcePlatformType linux +login anonymous +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550" validate
-		#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh "+@sSteamCmdForcePlatformType linux +login anonymous +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550" validate | tee /dev/stdout)
+		bash /steamcmd/steamcmd.sh +runscript /install.txt
+		#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +runscript /install.txt | tee /dev/stdout)
 		#STEAMCMD_ERROR=$(echo $STEAMCMD_OUTPUT | grep -q 'Error')
 		#if [ ! -z "$STEAMCMD_ERROR" ]; then
 		#	echo "Exiting, steamcmd install or update failed: $STEAMCMD_ERROR"
@@ -77,8 +84,8 @@ if [ "$RUST_START_MODE" = "2" ]; then
 else
 	# Install/update Rust from install.txt
 	echo "Installing/updating Rust.. (this might take a while, be patient)"
-	bash /steamcmd/steamcmd.sh "+@sSteamCmdForcePlatformType linux +login anonymous +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550" validate
-	#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh "+@sSteamCmdForcePlatformType linux +login anonymous +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550" validate | tee /dev/stdout)
+	bash /steamcmd/steamcmd.sh +runscript /install.txt
+	#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +runscript /install.txt | tee /dev/stdout)
 	#STEAMCMD_ERROR=$(echo $STEAMCMD_OUTPUT | grep -q 'Error')
 	#if [ ! -z "$STEAMCMD_ERROR" ]; then
 	#	echo "Exiting, steamcmd install or update failed: $STEAMCMD_ERROR"
