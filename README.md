@@ -11,7 +11,7 @@ Cracked or pirated versions of Rust are not supported in any way, shape or form.
 
 ---
 
-[![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/mdarkness1988/Rust-Server:latest)
+[![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/didstopia/rust-server)
 
 **TUTORIAL**: We've written a guide on how to use this image [here](http://rust.didscraft.com/rust-server-on-linux-using-docker/).
 
@@ -45,7 +45,6 @@ RUST_UPDATE_BRANCH (DEFAULT: "public" - Set to match the branch that you want to
 RUST_START_MODE (DEFAULT: "0" - Determines if the server should update and then start (0), only update (1) or only start (2))
 RUST_OXIDE_ENABLED (DEFAULT: "0" - Set to 1 to automatically install the latest version of Oxide)
 RUST_OXIDE_UPDATE_ON_BOOT (DEFAULT: "1" - Set to 0 to disable automatic update of Oxide on boot)
-STEAMID (Enter your SteamID to link it to your account else use "anonymous" without quotes.)
 ```
 
 # Logging and rotating logs

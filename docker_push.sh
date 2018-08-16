@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker tag mdarkness1988/rust-server:latest mdarkness1988/rust-server:latest
-docker push mdarkness1988/rust-server:latest
+docker tag didstopia/rust-server:latest didstopia/rust-server:latest
+docker push didstopia/rust-server:latest
