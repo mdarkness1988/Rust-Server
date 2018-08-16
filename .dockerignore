@@ -1,0 +1,13 @@
+sample.txt
+node_modules
+scheduler_app/node_modules
+shutdown_app/node_modules
+restart_app/node_modules
+rcon_app/node_modules
+app.yml
+*.log
+rust_data*
+.DS_Store
+docker_*.sh
+.git/
+.git*
