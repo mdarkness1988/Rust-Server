@@ -11,7 +11,7 @@ Cracked or pirated versions of Rust are not supported in any way, shape or form.
 
 ---
 
-[![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/didstopia/rust-server)
+[![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/mdarkness1988/rust-server)
 
 **TUTORIAL**: We've written a guide on how to use this image [here](http://rust.didscraft.com/rust-server-on-linux-using-docker/).
 
@@ -26,9 +26,9 @@ This image also supports having a modded server (using Oxide), check the ```RUST
 
 The following environment variables are available:
 ```
-RUST_SERVER_STARTUP_ARGUMENTS (DEFAULT: "-batchmode -load +server.secure 1")
+RUST_SERVER_STARTUP_ARGUMENTS (DEFAULT: " ")
 RUST_SERVER_IDENTITY (DEFAULT: "docker" - Mainly used for the name of the save directory)
-RUST_SERVER_SEED (DEFAULT: "12345" - The server map seed, must be an integer)
+RUST_SERVER_SEED (DEFAULT: "0" - The server map seed, must be an integer. 0 wilp randomly make a seed size each time the map has been deleted.)
 RUST_SERVER_WORLDSIZE (DEFAULT: "3500" - The map size, must be an integer)
 RUST_SERVER_NAME (DEFAULT: "Rust Server [DOCKER]" - The publicly visible server name)
 RUST_SERVER_MAXPLAYERS (DEFAULT: "500" - Maximum players on the server, must be an integer)
@@ -46,6 +46,9 @@ RUST_START_MODE (DEFAULT: "0" - Determines if the server should update and then 
 RUST_OXIDE_ENABLED (DEFAULT: "0" - Set to 1 to automatically install the latest version of Oxide)
 RUST_OXIDE_UPDATE_ON_BOOT (DEFAULT: "1" - Set to 0 to disable automatic update of Oxide on boot)
 STEAMID (Default: anonymous. Enter SteamID to link with steam account)
+RUST_SERVER_SECURE (Default: "1" - This sets facepunch anti-cheats on or off.)
+RUST_SERVER_FPS (Default: "-1" - Sets the server framerate limit. -1 means highest fps possible.)
+RUST_SERVER_UPDATEBATCH (Default: "192" - This is the speed objects etc ingame are updated. Higher the number the faster players load in game but may log once player trys to join.)
 ```
 
 # Logging and rotating logs
