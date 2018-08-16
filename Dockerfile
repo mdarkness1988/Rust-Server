@@ -27,7 +27,6 @@ RUN curl -sL https://github.com/Facepunch/webrcon/archive/24b0898d86706723d52bb4
 
 # Customize the webrcon package to fit our needs
 ADD fix_conn.sh /tmp/fix_conn.sh
-RUN chmod +x /fix_conn.sh
 
 # Create and set the steamcmd folder as a volume
 RUN mkdir -p /steamcmd/rust
