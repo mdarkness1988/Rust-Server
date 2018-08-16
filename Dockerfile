@@ -57,10 +57,10 @@ RUN ln -s /rcon_app/app.js /usr/bin/rcon
 ADD install.txt /install.txt
 
 # Copy the Rust startup script
-ADD start_rust.sh /start.sh
+ADD chmod +x start_rust.sh /start.sh
 
 # Copy the Rust update check script
-ADD update_check.sh /update_check.sh
+ADD chmod +x update_check.sh /update_check.sh
 
 # Copy extra files
 COPY README.md LICENSE.md /
