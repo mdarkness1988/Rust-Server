@@ -1,4 +1,4 @@
-FROM mdarkness1988/base:nodejs-steamcmd-ubuntu-16.04
+FROM didstopia/base:nodejs-steamcmd-ubuntu-16.0
 
 MAINTAINER Didstopia <support@didstopia.com>
 
