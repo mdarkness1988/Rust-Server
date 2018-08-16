@@ -77,8 +77,8 @@ if [ "$RUST_START_MODE" = "2" ]; then
 else
 	# Install/update Rust from install.txt
 	echo "Installing/updating Rust.. (this might take a while, be patient)"
-	bash /steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType linux +login $STEAMID +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550 validate
-	#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType linux +login $STEAMID +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550 validate | tee /dev/stdout)
+	bash /steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType linux +login anonymous +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550 validate
+	#STEAMCMD_OUTPUT=$(bash /steamcmd/steamcmd.sh +@sSteamCmdForcePlatformType linux +login anonymous +force_install_dir /steamcmd/rust +app_info_update 1 +app_update 258550 validate | tee /dev/stdout)
 	#STEAMCMD_ERROR=$(echo $STEAMCMD_OUTPUT | grep -q 'Error')
 	#if [ ! -z "$STEAMCMD_ERROR" ]; then
 	#	echo "Exiting, steamcmd install or update failed: $STEAMCMD_ERROR"
