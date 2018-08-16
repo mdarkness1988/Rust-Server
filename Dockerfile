@@ -1,4 +1,4 @@
-FROM mdarkness1988/rust-servet
+
 
 MAINTAINER Didstopia <support@didstopia.com>
 
