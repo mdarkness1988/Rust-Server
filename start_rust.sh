@@ -50,7 +50,7 @@ fi
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
 
-if [ "$ANONYMOUS" = "1" ]; then
+if [ "$STEAMANONYMOUS" = "1" ]; then
 echo "" > install.txt
 echo "@sSteamCmdForcePlatformType linux" >> /install.txt
 echo "login anonymous" >> /install.txt
