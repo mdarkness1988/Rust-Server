@@ -50,7 +50,7 @@ fi
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
 
-echo `</install.txt`
+echo "$(cat install.txt)"
 
 if [ "$STEAMANONYMOUS" = "1" ]; then
 echo "" > /install.txt
@@ -60,6 +60,7 @@ echo "force_install_dir /steamcmd/rust" >> /install.txt
 echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
+echo "Anonymous was selected."
 fi
 if [ "$STEAMANONYMOUS" = "0" ]; then
 echo "" > /install.txt
@@ -70,8 +71,9 @@ echo "force_install_dir /steamcmd/rust" >> /install.txt
 echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
+echo "User Login was seleceted."
 fi
-echo `</install.txt`
+echo "$(cat install.txt)"
 
 # Check which branch to use
 if [ ! -z ${RUST_BRANCH+x} ]; then
