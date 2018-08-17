@@ -50,6 +50,8 @@ fi
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
 
+echo `</install.txt`
+
 if [ "$STEAMANONYMOUS" = "1" ]; then
 echo "" > /install.txt
 echo "@sSteamCmdForcePlatformType linux" >> /install.txt
@@ -69,6 +71,7 @@ echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
 fi
+echo `</install.txt`
 
 # Check which branch to use
 if [ ! -z ${RUST_BRANCH+x} ]; then
