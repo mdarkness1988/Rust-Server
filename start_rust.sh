@@ -46,7 +46,7 @@ if [ ! -d "/steamcmd/rust" ]; then
 	mkdir -p /steamcmd/rust
 fi
 
-echo "$(cat install.txt)"
+echo "$(cat /install.txt)"
 
 if [ "$STEAMANONYMOUS" = "1" ]; then
 echo "" > /install.txt
@@ -57,6 +57,8 @@ echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
 echo "Anonymous was selected."
+else 
+echo "error 1"
 fi
 if [ "$STEAMANONYMOUS" = "0" ]; then
 echo "" > /install.txt
@@ -67,9 +69,11 @@ echo "force_install_dir /steamcmd/rust" >> /install.txt
 echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
-echo "User Login was seleceted."
+echo "User Login was selected."
+else
+echo "error 0"
 fi
-echo "$(cat install.txt)"
+echo "$(cat /install.txt)"
 
 # Install/update steamcmd
 echo "Installing/updating steamcmd.."
