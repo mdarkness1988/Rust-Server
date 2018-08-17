@@ -1,5 +1,5 @@
 @sSteamCmdForcePlatformType linux
-login anonymous
+login mdarkness1988 darkness290388 
 force_install_dir /steamcmd/rust
 app_info_update 1
 app_update 258550 validate
