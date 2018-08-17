@@ -51,7 +51,7 @@ echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
 
 if [ "$STEAMANONYMOUS" = "1" ]; then
-echo "" > install.txt
+echo "" > /install.txt
 echo "@sSteamCmdForcePlatformType linux" >> /install.txt
 echo "login anonymous" >> /install.txt
 echo "force_install_dir /steamcmd/rust" >> /install.txt
@@ -59,9 +59,10 @@ echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
 
-else
+fi
 
-echo "" > install.txt
+if [ "$STEAMANONYMOUS" = "0" ]; then
+echo "" > /install.txt
 echo "@sSteamCmdForcePlatformType linux" >> /install.txt
 echo "login <$STEAMID> <$STEAMPW>" >> /install.txt
 echo "force_install_dir /steamcmd/rust" >> /install.txt
