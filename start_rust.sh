@@ -58,19 +58,16 @@ echo "force_install_dir /steamcmd/rust" >> /install.txt
 echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
-
 fi
-
 if [ "$STEAMANONYMOUS" = "0" ]; then
 echo "" > /install.txt
 echo "@NoPromptForPassword 1" >> /install.txt
 echo "@sSteamCmdForcePlatformType linux" >> /install.txt
-echo "login <$STEAMID> <$STEAMPW>" >> /install.txt
+echo "login $STEAMID $STEAMPW" >> /install.txt
 echo "force_install_dir /steamcmd/rust" >> /install.txt
 echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
-
 fi
 
 # Check which branch to use
