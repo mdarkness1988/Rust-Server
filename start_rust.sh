@@ -46,10 +46,6 @@ if [ ! -d "/steamcmd/rust" ]; then
 	mkdir -p /steamcmd/rust
 fi
 
-# Install/update steamcmd
-echo "Installing/updating steamcmd.."
-curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
-
 echo "$(cat install.txt)"
 
 if [ "$STEAMANONYMOUS" = "1" ]; then
@@ -74,6 +70,12 @@ echo "quit" >> /install.txt
 echo "User Login was seleceted."
 fi
 echo "$(cat install.txt)"
+
+# Install/update steamcmd
+echo "Installing/updating steamcmd.."
+curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
+
+
 
 # Check which branch to use
 if [ ! -z ${RUST_BRANCH+x} ]; then
