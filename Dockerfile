@@ -58,9 +58,11 @@ ADD install.txt /install.txt
 
 # Copy the Rust startup script
 ADD start_rust.sh /start.sh
+RUN chmod +x /start.sh
 
 # Copy the Rust update check script
 ADD update_check.sh /update_check.sh
+RUN chmod +x /update_check.sh
 
 # Copy extra files
 COPY README.md LICENSE.md /
