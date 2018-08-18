@@ -62,7 +62,7 @@ RUN chmod +x /start.sh
 
 # Copy the Rust update check script
 ADD update_check.sh /update_check.sh
-RUN chmod +x /update_check.sh.sh
+RUN chmod +x /update_check.sh
 
 # Copy extra files
 COPY README.md LICENSE.md /
