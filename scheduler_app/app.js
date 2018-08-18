@@ -19,8 +19,10 @@ setTimeout(function()
 	checkForUpdates();
 }, 1000 * startupDelayInSeconds);
 
+console.log("before update");
 function checkForUpdates()
 {
+console.log("before rcon");
 
 var name = process.env.RUST_SERVER_NAME;
 var today = new Date(); 
