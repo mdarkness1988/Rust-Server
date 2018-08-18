@@ -21,9 +21,6 @@ setTimeout(function()
 
 function checkForUpdates()
 {
-	setTimeout(function()
-	{
-
 
 var name = process.env.RUST_SERVER_NAME;
 var today = new Date(); 
@@ -37,19 +34,23 @@ var servername = name + ' | ' + today + ' |';
 
 
 var serverHostname = 'localhost';
-varserverPort = process.env.RUST_RCON_PORT;
+var serverPort = process.env.RUST_RCON_PORT;
 var serverPassword = process.env.RUST_RCON_PASSWORD;
 
 var WebSocket = require('ws');
 var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
-	ws.on('open', function open()
+
+ws.on('open', function open()
 	{
 
-ws.send(createPacket("server.hostname \"" + servername + "\""));
-ws.send(createPacket("Say ."));
+      ws.send(createPacket("server.hostname \"" + servername + "\""));
+      ws.send(createPacket("Say ."));
 
-}
+   }
+	setTimeout(function()
+	{
 
+         ws.close(1000);
 
 
 		if (debug) console.log("Running bash /update_check.sh");
