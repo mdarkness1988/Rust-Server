@@ -7,5 +7,9 @@
     "start": "nodejs app.js"
   },
   "author": "",
-  "private": "true"
+  "private": "true",
+  "dependencies": {
+    "request": "^2.83.0",
+    "ws": "^4.0.0"
+  }
 }
