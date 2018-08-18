@@ -43,7 +43,6 @@ fi
 # Get the new build id directly from Steam
 NEW_BUILDID="$(./steamcmd/steamcmd.sh +login anonymous +app_info_update 1 +app_info_print "258550" +quit | grep -EA 1000 "^\s+\"branches\"$" | grep -EA 5 "^\s+\"$RUST_UPDATE_BRANCH\"$" | grep -m 1 -EB 10 "^\s+}$" | grep -E "^\s+\"buildid\"\s+" | tr '[:blank:]"' ' ' | tr -s ' ' | sed "s/ buildid //g" | xargs)"
 
-
 # Check that we actually got a new build id
 STRING_SIZE=${#NEW_BUILDID}
 if [ "$STRING_SIZE" -lt "6" ]; then

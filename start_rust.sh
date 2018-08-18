@@ -46,12 +46,9 @@ if [ ! -d "/steamcmd/rust" ]; then
 	mkdir -p /steamcmd/rust
 fi
 
-
 # Install/update steamcmd
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
-
-
 
 # Check which branch to use
 if [ ! -z ${RUST_BRANCH+x} ]; then
@@ -220,9 +217,9 @@ cd /steamcmd/rust
 # Run the server
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then
-	unbuffer /steamcmd/rust/RustDedicated -batchmode -load $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.secure "$RUST_SERVER_SECURE" +fps.limit "$RUST_SERVER_FPS" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+	unbuffer /steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND -batchmode -load +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.secure "$RUST_SERVER_SECURE" +fps.limit "$RUST_SERVER_FPS" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
+	/steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
 fi
 
 child=$!
