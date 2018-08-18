@@ -26,39 +26,28 @@ function checkForUpdates()
 
 
 var name = process.env.RUST_SERVER_NAME;
-var today = new Date(); var dd = today.getDate(); 
+var today = new Date(); 
+var dd = today.getDate(); 
 var mm = today.getMonth()+1; 
 var yyyy = today.getFullYear(); 
 if(dd<10) { dd = '0'+dd } if(mm<10) { mm = '0'+mm } today = dd + '/' + mm; 
 document.write(today);
 
-var servername = name + ' ' + today;
+var servername = name + ' | ' + today + ' |';
 
 
 var serverHostname = 'localhost';
-	var serverPort = process.env.RUST_RCON_PORT;
-	var serverPassword = process.env.RUST_RCON_PASSWORD;
+varserverPort = process.env.RUST_RCON_PORT;
+var serverPassword = process.env.RUST_RCON_PASSWORD;
 
-	var WebSocket = require('ws');
-	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+var WebSocket = require('ws');
+var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
 	{
 
 ws.send(createPacket("server.hostname \"" + servername + "\""));
+ws.send(createPacket("Say ."));
 
-ws.close();
-
-}
-
-function createPacket(command)
-{
-	var packet =
-	{
-		Identifier: -1,
-		Message: command,
-		Name: "WebRcon"
-	};
-	return JSON.stringify(packet);
 }
 
 
@@ -72,4 +61,17 @@ function createPacket(command)
 			checkForUpdates();
 		});		
 	}, 1000 * runIntervalInSeconds);
+}
+
+
+
+function createPacket(command)
+{
+	var packet =
+	{
+		Identifier: -1,
+		Message: command,
+		Name: "WebRcon"
+	};
+	return JSON.stringify(packet);
 }
