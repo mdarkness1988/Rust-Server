@@ -46,7 +46,6 @@ if [ ! -d "/steamcmd/rust" ]; then
 	mkdir -p /steamcmd/rust
 fi
 
-Echo "hello"
 
 # Install/update steamcmd
 echo "Installing/updating steamcmd.."
