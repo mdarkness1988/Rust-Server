@@ -1,5 +1,5 @@
 {
-  "name": "scheduler_app",
+  "name": "restart_app",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,9 +7,9 @@
     "start": "nodejs app.js"
   },
   "author": "",
-  "private": "true"
-"dependencies": { 
-"request": "^2.83.0", 
-"ws": "^4.0.0"
-}
+  "private": "true",
+  "dependencies": {
+    "request": "^2.83.0",
+    "ws": "^4.0.0"
+  }
 }
