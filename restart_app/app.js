@@ -2,68 +2,130 @@
 
 var debug = false;
 
-var child_process = require('child_process');
-
-var startupDelayInSeconds = 60 * 5;
-var runIntervalInSeconds = 60 * 5;
+var request = require('request');
+var isRestarting = false;
+var now = Math.floor(new Date() / 1000);
+var timeout = (1000 * 60) * 30;
+var updateCheckInterval = (1000 * 60) * 5;
 
 if (debug)
 {
-	startupDelayInSeconds = 1;
-	runIntervalInSeconds = 60;
+	updateCheckInterval = 5000; // Check every 5 seconds
+	timeout = 1000 * 60; // Timeout after a minute
 }
 
-// Start the endless loop after a delay (allow the server to start)
+// Timeout after 30 minutes and restart
 setTimeout(function()
 {
-	checkForUpdates();
-}, 1000 * startupDelayInSeconds);
+	console.log("Timeout exceeded, forcing a restart");
+	restart();
+}, timeout);
 
-function checkForUpdates()
+// Start checking for client updates
+checkForClientUpdate();
+
+function checkForClientUpdate()
 {
-	setTimeout(function()
+	if (isRestarting)
 	{
+		if (debug) console.log("We're restarting, skipping client update check..");
+		return;
+	}
 
+	console.log("Checking if a client update is available..");
+	request({ url: 'https://whenisupdate.com/api.json', headers: { Referer: 'rust-docker-server' }, timeout: 10000 }, function(error, response, body)
+	{
+		if (!error && response.statusCode == 200)
+		{
+		    var info = JSON.parse(body);
+		    var latest = info.latest;
+		    if (latest !== undefined && latest.length > 0)
+		    {
+		    	if (latest >= now)
+		    	{
+		    		console.log("Client update is out, forcing a restart");
+		    		restart();
+		    		return;
+		    	}
+		    }
+		    if (debug) console.log("Client update not out yet..");
+	  	}
+	  	else if (debug)
+	  	{
+	  		console.log("Error: " + error);
+	  	}
 
-var name = process.env.RUST_SERVER_NAME;
-var today = new Date(); 
-var dd = today.getDate(); 
-var mm = today.getMonth()+1; 
-var yyyy = today.getFullYear(); 
-if(dd<10) { dd = '0'+dd } if(mm<10) { mm = '0'+mm } today = dd + '/' + mm; 
-document.write(today);
+	  	// Keep checking for client updates every 5 minutes
+	  	setTimeout(function()
+		{
+			checkForClientUpdate();
+		}, updateCheckInterval);
+	});
+}
 
-var servername = name + ' | ' + today + ' |';
+function restart()
+{
+	if (debug) console.log("Restarting..");
+	if (isRestarting)
+	{
+		if (debug) console.log("We're already restarting..");
+		return;
+	}
+	isRestarting = true;
 
+	var serverHostname = 'localhost';
+	var serverPort = process.env.RUST_RCON_PORT;
+	var serverPassword = process.env.RUST_RCON_PASSWORD;
 
-var serverHostname = 'localhost';
-var serverPort = process.env.RUST_RCON_PORT;
-var serverPassword = process.env.RUST_RCON_PASSWORD;
-
-var WebSocket = require('ws');
-var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+	var WebSocket = require('ws');
+	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
 	{
-
-ws.send(createPacket("server.hostname \"" + servername + "\""));
-ws.send(createPacket("Say ."));
-
-}
-
-
-
-		if (debug) console.log("Running bash /update_check.sh");
-		child_process.exec('bash /update_check.sh', { /*timeout: 60 * 1000,*/ env: process.env }, function (err, stdout, stderr)
+		setTimeout(function()
 		{
-			if (debug) console.log("bash /update_check.sh STDOUT: " + stdout);
-			if (debug && err) console.log("bash /update_check.sh ERR: " + err);
-			if (debug && stderr) console.log("bash /update_check.sh STDERR: " + stderr);
-			checkForUpdates();
-		});		
-	}, 1000 * runIntervalInSeconds);
+			ws.send(createPacket("say NOTICE: We're updating the server in <color=orange>5 minutes</color>, so get to a safe spot!"));
+			setTimeout(function()
+			{
+				ws.send(createPacket("say NOTICE: We're updating the server in <color=orange>4 minutes</color>, so get to a safe spot!"));
+				setTimeout(function()
+				{
+					ws.send(createPacket("say NOTICE: We're updating the server in <color=orange>3 minutes</color>, so get to a safe spot!"));
+					setTimeout(function()
+					{
+						ws.send(createPacket("say NOTICE: We're updating the server in <color=orange>2 minutes</color>, so get to a safe spot!"));
+						setTimeout(function()
+						{
+							ws.send(createPacket("say NOTICE: We're updating the server in <color=orange>1 minute</color>, so get to a safe spot!"));
+							setTimeout(function()
+							{
+								ws.send(createPacket("global.kickall <color=orange>Updating/Restarting</color>"));
+								setTimeout(function()
+								{
+									ws.send(createPacket("quit"));
+									//ws.send(createPacket("restart 60")); // NOTE: Don't use restart, because that doesn't actually restart the container!
+									setTimeout(function()
+									{
+										ws.close(1000);
+
+										// After 2 minutes, if the server's still running, forcibly shut it down
+										setTimeout(function()
+										{
+											var fs = require('fs');
+											fs.unlinkSync('/tmp/restart_app.lock');
+
+											var child_process = require('child_process');
+											child_process.execSync('kill -s 2 $(pidof bash)');
+										}, 1000 * 60 * 2);
+									}, 1000);
+								}, 1000);
+							}, 1000 * 60);
+						}, 1000 * 60);
+					}, 1000 * 60);
+				}, 1000 * 60);
+			}, 1000 * 60);
+		}, 1000);
+	});
 }
-
-
 
 function createPacket(command)
 {
