@@ -53,7 +53,7 @@ ws.on('open', function open()
 	{
 
       
-         ws.close(1000);
+         ws.close(100000);
 
 		if (debug) console.log("Running bash /update_check.sh");
 		child_process.exec('bash /update_check.sh', { /*timeout: 60 * 1000,*/ env: process.env }, function (err, stdout, stderr)
