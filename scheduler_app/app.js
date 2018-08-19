@@ -7,9 +7,6 @@ var child_process = require('child_process');
 var startupDelayInSeconds = 60 * 5;
 var runIntervalInSeconds = 60 * 5;
 
-console.log(”hello");
-console.log(servername);
-
 if (debug)
 {
 	startupDelayInSeconds = 1;
@@ -25,18 +22,16 @@ setTimeout(function()
 function checkForUpdates()
 {
 
-console.log("goodbye");
-console.log(servername);
 
-var name = process.env.RUST_SERVER_NAME;
-var today = new Date(); 
-var dd = today.getDate(); 
-var mm = today.getMonth()+1; 
-var yyyy = today.getFullYear(); 
-if(dd<10) { dd = '0'+dd } if(mm<10) { mm = '0'+mm } today = dd + '/' + mm; 
-document.write(today);
+//var name = process.env.RUST_SERVER_NAME;
+//var today = new Date(); 
+//var dd = today.getDate(); 
+//var mm = today.getMonth()+1; 
+//var yyyy = today.getFullYear(); 
+//if(dd<10) { dd = '0'+dd } if(mm<10) { mm = '0'+mm } today = dd + '/' + mm; 
+//document.write(today);
 
-var servername = name + ' | ' + today + ' |';
+//var servername = name + ' | ' + today + ' |';
 
 
 var serverHostname = 'localhost';
@@ -50,7 +45,7 @@ ws.on('open', function open()
 	{
 
       ws.send(createPacket("say NOTICE: testing commands"));
-      ws.send(createPacket("server.hostname \"" + servername + "\""));
+      //ws.send(createPacket("server.hostname \"" + servername + "\""));
       
 
    }
@@ -58,7 +53,7 @@ ws.on('open', function open()
 	{
 
       
-
+         ws.close(1000);
 
 		if (debug) console.log("Running bash /update_check.sh");
 		child_process.exec('bash /update_check.sh', { /*timeout: 60 * 1000,*/ env: process.env }, function (err, stdout, stderr)
