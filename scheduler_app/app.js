@@ -19,10 +19,8 @@ setTimeout(function()
 	checkForUpdates();
 }, 1000 * startupDelayInSeconds);
 
-console.log("before update");
 function checkForUpdates()
 {
-console.log("before rcon");
 
 var name = process.env.RUST_SERVER_NAME;
 var today = new Date(); 
@@ -52,7 +50,7 @@ ws.on('open', function open()
 	setTimeout(function()
 	{
 
-         ws.close(1000);
+      
 
 
 		if (debug) console.log("Running bash /update_check.sh");
