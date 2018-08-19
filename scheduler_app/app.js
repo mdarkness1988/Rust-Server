@@ -7,6 +7,9 @@ var child_process = require('child_process');
 var startupDelayInSeconds = 60 * 5;
 var runIntervalInSeconds = 60 * 5;
 
+console.log(”hello");
+console.log(servername);
+
 if (debug)
 {
 	startupDelayInSeconds = 1;
@@ -21,6 +24,9 @@ setTimeout(function()
 
 function checkForUpdates()
 {
+
+console.log("goodbye");
+console.log(servername);
 
 var name = process.env.RUST_SERVER_NAME;
 var today = new Date(); 
