@@ -43,8 +43,9 @@ var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serve
 ws.on('open', function open()
 	{
 
+      ws.send(createPacket("say NOTICE: testing commands"));
       ws.send(createPacket("server.hostname \"" + servername + "\""));
-      ws.send(createPacket("Say ."));
+      
 
    }
 	setTimeout(function()
