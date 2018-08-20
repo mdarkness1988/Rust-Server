@@ -100,5 +100,7 @@ ENV RUST_SERVER_SECURE "1"
 ENV STEAMUSER ""
 ENV STEAMPW ""
 
+ENV RESTARTING "false"
+
 # Start the server
 ENTRYPOINT ["./start.sh"]
