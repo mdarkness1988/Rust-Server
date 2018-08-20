@@ -34,6 +34,7 @@ exit_handler()
 	exit
 }
 
+
 # Trap specific signals and forward to the exit handler
 trap 'exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
 
@@ -49,6 +50,35 @@ fi
 # Install/update steamcmd
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
+
+
+
+if [ -z "$STEAMUSER" ]; then
+echo "" > /install.txt
+echo "@sSteamCmdForcePlatformType linux" >> /install.txt
+echo "login anonymous" >> /install.txt
+echo "force_install_dir /steamcmd/rust" >> /install.txt
+echo "app_info_update 1" >> /install.txt
+echo "app_update 258550 validate" >> /install.txt
+echo "quit" >> /install.txt
+
+else if [ -z "$STEAMPW" ]; then
+echo "Please enter steam password"
+exit
+else
+
+echo "" > /install.txt
+echo "@sSteamCmdForcePlatformType linux" >> /install.txt
+echo "login $STEAMUSER $STEAMPW" >> /install.txt
+echo "force_install_dir /steamcmd/rust" >> /install.txt
+echo "app_info_update 1" >> /install.txt
+echo "app_update 258550 validate" >> /install.txt
+echo "quit" >> /install.txt
+
+fi
+fi
+
+
 
 # Check which branch to use
 if [ ! -z ${RUST_BRANCH+x} ]; then
