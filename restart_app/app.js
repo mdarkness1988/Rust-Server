@@ -72,6 +72,7 @@ function restart()
 		return;
 	}
 	isRestarting = true;
+   process.env.RESTARTING = 'true';
 
 	var serverHostname = 'localhost';
 	var serverPort = process.env.RUST_RCON_PORT;
