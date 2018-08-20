@@ -1,6 +1,6 @@
 FROM didstopia/base:nodejs-steamcmd-ubuntu-16.04
 
-MAINTAINER Didstopia <support@didstopia.com>
+MAINTAINER Mdarkness1988 <>
 
 # Fix apt-get warnings
 ARG DEBIAN_FRONTEND=noninteractive
