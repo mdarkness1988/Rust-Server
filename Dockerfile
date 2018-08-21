@@ -11,7 +11,6 @@ RUN apt-get update && \
     nginx \
     expect \
     tcl \
-    python2.7 \
     python-miniupnpc \
     libgdiplus && \
     rm -rf /var/lib/apt/lists/*
@@ -23,6 +22,7 @@ RUN rm -fr /usr/share/nginx/html/* && \
 
 # COPY upnp to correct location
 COPY upnp-add-port /usr/bin/upnp-add-port
+RUN chmod +x /usr/bin/upnp-add-port
 
 
 # Install webrcon (specific commit)
