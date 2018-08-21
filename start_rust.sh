@@ -47,11 +47,8 @@ find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
 find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 
-RESTARTING="false"
-echo "SERVER HAS BEEN WIPED"
-
-else
-
+RESTARTING="false" 
+echo "SERVER HAS BEEN WIPED" 
 fi
 
 # Trap specific signals and forward to the exit handler
