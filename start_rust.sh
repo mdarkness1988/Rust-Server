@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#!/usr/bin/upnp-add-port
 
 # Define the exit handler
 exit_handler()
