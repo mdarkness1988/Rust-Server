@@ -308,4 +308,6 @@ fi
 pkill -f nginx
 
 echo "Exiting.."
+sleep 2
+clear
 exit
