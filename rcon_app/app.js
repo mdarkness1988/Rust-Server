@@ -40,7 +40,7 @@ ws.on('open', function open()
 		}, 1000);
 	}, 250);
 });
-ws.on('message', function(data, flags)
+ws.on('message', function(data)
 {
 	if (!messageSent) return;
 	try
