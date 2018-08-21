@@ -25,6 +25,7 @@ if [ "$UPNP" = "1" ]; then
 upnp-delete-port 8080
 upnp-delete-port 28015
 upnp-delete-port 28016
+echo "Port forwarding has closed ports.."
 fi
 	
 	# Execute the RCON shutdown command
@@ -42,9 +43,10 @@ fi
 # Auto port forward ports.
 
 if [ "$UPNP" = "1" ]; then
-upnp-add-port 8080-8080
-upnp-add-port 28015-28015
-upnp-add-port 28016-28016
+upnp-add-port 8080
+upnp-add-port 28015
+upnp-add-port 28016
+echo "Port forwarding has opened ports.."
 fi
 
 
