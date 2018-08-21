@@ -22,7 +22,9 @@ exit_handler()
 		fi
 	fi
 if [ "$UPNP" = "1" ]; then
-upnp-delete-port
+upnp-delete-port 8080
+upnp-delete-port 28015
+upnp-delete-port 28016
 fi
 	
 	# Execute the RCON shutdown command
@@ -40,7 +42,9 @@ fi
 # Auto port forward ports.
 
 if [ "$UPNP" = "1" ]; then
-upnp-add-port
+upnp-add-port 8080 8080
+upnp-add-port 28015 28015
+upnp-add-port 28016 28016
 fi
 
 

@@ -3,7 +3,6 @@ import miniupnpc
 u = miniupnpc.UPnP()
 u.discoverdelay=200;u.discover();u.selectigd()
 
-u.deleteportmapping('28015','UDP')
-u.deleteportmapping(’28015’,'TCP')
-u.deleteportmapping(’28016’,'TCP')
-u.deleteportmapping(’8080’,'TCP')
+import sys; portNo = int(sys.argv[-1])
+u.deleteportmapping(portNo,'UDP')
+u.deleteportmapping(portNo,'TCP')
