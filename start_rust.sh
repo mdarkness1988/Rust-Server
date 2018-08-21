@@ -21,6 +21,11 @@ exit_handler()
 			cp -fr "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/xp*.db" "/steamcmd/rust/bak/"
 		fi
 	fi
+if [ "$UPNP" = "1" ]; then
+upnp-delete-port 8080
+upnp-delete-port 28015
+upnp-delete-port 28016
+fi
 	
 	# Execute the RCON shutdown command
 	node /shutdown_app/app.js
@@ -34,7 +39,14 @@ exit_handler()
 	exit
 }
 
- 
+# Auto port forward ports.
+
+if [ "$UPNP" = "1" ]; then
+upnp-add-port 8080-8080
+upnp-add-port 28015-28015
+upnp-add-port 28016-28016
+fi
+
 
 if [ "$RESTARTING" = "true" ]; then
 
@@ -43,11 +55,8 @@ find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
 find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 
-RESTARTING="false"
-echo "SERVER HAS BEEN WIPED"
-
-else
-
+RESTARTING="false" 
+echo "SERVER HAS BEEN WIPED" 
 fi
 
 # Trap specific signals and forward to the exit handler
@@ -77,7 +86,7 @@ echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
 
-else if [ -z "$STEAMPW" ]; then
+elif [ -z "$STEAMPW" ]; then
 echo "Please enter steam password"
 exit
 else
@@ -200,7 +209,7 @@ fi
 
 # Check if a special seed override file exists
 if [ -f "/steamcmd/rust/seed_override" ]; then
-	RUST_SEED_OVERRIDE=`cat /steamcmd/rust/seed_override`
+	RUST_SEED_OVERRIDE=$(cat /steamcmd/rust/seed_override)
 	echo "Found seed override: $RUST_SEED_OVERRIDE"
 
 	# Modify the server identity to include the override seed
@@ -224,7 +233,7 @@ fi
 
 ## Disable logrotate if "-logfile" is set in $RUST_STARTUP_COMMAND
 LOGROTATE_ENABLED=1
-RUST_STARTUP_COMMAND_LOWERCASE=`echo "$RUST_STARTUP_COMMAND" | sed 's/./\L&/g'`
+RUST_STARTUP_COMMAND_LOWERCASE=$(echo "$RUST_STARTUP_COMMAND" | sed 's/./\L&/g')
 if [[ $RUST_STARTUP_COMMAND_LOWERCASE == *" -logfile "* ]]; then
 	LOGROTATE_ENABLED=0
 fi
@@ -242,7 +251,7 @@ if [ "$LOGROTATE_ENABLED" = "1" ]; then
 	fi
 
 	# Set the logfile filename/path
-	DATE=`date '+%Y-%m-%d_%H-%M-%S'`
+	DATE=$(date '+%Y-%m-%d_%H-%M-%S')
 	RUST_SERVER_LOG_FILE="/steamcmd/rust/logs/$RUST_SERVER_IDENTITY"_"$DATE.txt"
 
 	# Archive old logs

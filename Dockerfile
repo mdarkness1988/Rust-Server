@@ -11,7 +11,6 @@ RUN apt-get update && \
     nginx \
     expect \
     tcl \
-    python2.7 \
     python-miniupnpc \
     libgdiplus && \
     rm -rf /var/lib/apt/lists/*
@@ -23,6 +22,10 @@ RUN rm -fr /usr/share/nginx/html/* && \
 
 # COPY upnp to correct location
 COPY upnp-add-port /usr/bin/upnp-add-port
+RUN chmod +x /usr/bin/upnp-add-port
+
+COPY upnp-delete-port /usr/bin/upnp-delete-port
+RUN chmod +x /usr/bin/upnp-delete-port
 
 
 # Install webrcon (specific commit)
@@ -105,6 +108,7 @@ ENV RUST_SERVER_UPDATEBATCH "256"
 ENV RUST_SERVER_SECURE "1"
 ENV STEAMUSER ""
 ENV STEAMPW ""
+ENV UPNP "1"
 
 ENV RESTARTING "false"
 
