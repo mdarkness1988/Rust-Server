@@ -21,16 +21,18 @@ exit_handler()
 			cp -fr "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/xp*.db" "/steamcmd/rust/bak/"
 		fi
 	fi
+
+	
+	# Execute the RCON shutdown command
+	node /shutdown_app/app.js
+	sleep 5
+   
 if [ "$UPNP" = "1" ]; then
 upnp-delete-port 8080
 upnp-delete-port 28015
 upnp-delete-port 28016
 echo "Port forwarding has closed ports.."
 fi
-	
-	# Execute the RCON shutdown command
-	node /shutdown_app/app.js
-	sleep 5
 
 	pkill -f nginx
 
@@ -100,7 +102,6 @@ echo "force_install_dir /steamcmd/rust" >> /install.txt
 echo "app_info_update 1" >> /install.txt
 echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
-
 fi
 
 
