@@ -42,9 +42,9 @@ fi
 # Auto port forward ports.
 
 if [ "$UPNP" = "1" ]; then
-upnp-add-port 8080 8080
-upnp-add-port 28015 28015
-upnp-add-port 28016 28016
+upnp-add-port 8080-8080
+upnp-add-port 28015-28015
+upnp-add-port 28016-28016
 fi
 
 
