@@ -12,16 +12,16 @@ Cracked or pirated versions of Rust are not supported in any way, shape or form.
 [![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/mdarkness1988/rust-server)
 
 **FEATURES**
-       . Automatic updates on release (Default: Enabled in config)
-       . Auto Wipe on server updates
-       . Login with Stean username and password if required
-       . UPnP support for auto port forwarding when running server (Default: Enabled in config)
-       . MORE YET TO COME....
+       1. Automatic updates on release (Default: Enabled in config)
+       2. Auto Wipe on server updates
+       3. Login with Stean username and password if required
+       4. UPnP support for auto port forwarding when running server (Default: Enabled in config)
+       5. MORE YET TO COME....
 
 
 
 # TUTORIAL:
-** If you want to manually install this container you can by these simple steps... **
+**If you want to manually install this container you can by these simple steps**
 
 1. Add new container under Docker tab.
 2. Give the container a name you prefer.
@@ -62,7 +62,6 @@ RUST_SERVER_UPDATEBATCH (DEFAULT: "256” - How fast to update objects in game. 
 STEAMUSER (DEFAULT: "BLANK" - Keep it empty for anonymous login else enter your steam username (CAP Sensitive))
 STEAMPW (DEFAULT: "BLANK" - Enter your steam password (CAP Sensitive) if you have entered username into STEAMUSER)
 UPNP (DEFAULT: "1" - Enable or disable the option for the server to open your ports automaticly if you wish to access the server outside your network)
-
 
 ```
 
