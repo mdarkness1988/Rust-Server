@@ -21,6 +21,9 @@ exit_handler()
 			cp -fr "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/xp*.db" "/steamcmd/rust/bak/"
 		fi
 	fi
+if [ "$UPNP" = "1" ]; then
+upnp-delete-port
+fi
 	
 	# Execute the RCON shutdown command
 	node /shutdown_app/app.js
@@ -37,16 +40,7 @@ exit_handler()
 # Auto port forward ports.
 
 if [ "$UPNP" = "1" ]; then
-upnp-delete-port 28015
-upnp-delete-port 28016
-upnp-delete-port 8080
-upnp-add-port 28015
-upnp-add-port 28016
-upnp-add-port 8080
-else
-upnp-delete-port 28015
-upnp-delete-port 28016
-upnp-delete-port 8080
+upnp-add-port
 fi
 
 
