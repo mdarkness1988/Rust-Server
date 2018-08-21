@@ -35,9 +35,9 @@ exit_handler()
 }
 
 # Auto port forward ports.
-upnp-add-port (28015)
-upnp-add-port (28016)
-upnp-add-port (8080)
+upnp-add-port ("28015")
+upnp-add-port ("28016")
+upnp-add-port ("8080")
 
 if [ "$RESTARTING" = "true" ]; then
 
