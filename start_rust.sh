@@ -31,6 +31,7 @@ if [ "$UPNP" = "1" ]; then
 upnp-delete-port 8080
 upnp-delete-port 28015
 upnp-delete-port 28016
+sleep 3
 echo ""
 echo ""
 echo "Port forwarding has closed ports.."
@@ -295,17 +296,20 @@ else
 	/steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
 fi
 
-child=$!
-wait "$child"
-   
+ 
 if [ "$UPNP" = "1" ]; then
 upnp-delete-port 8080
 upnp-delete-port 28015
 upnp-delete-port 28016
 echo ""
 echo ""
+sleep 3
 echo "Port forwarding has closed ports.."
 fi
+
+child=$!
+wait "$child"
+  
 
 pkill -f nginx
 
