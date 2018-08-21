@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#!/usr/bin/upnp-add-port
 
 # Define the exit handler
 exit_handler()
@@ -36,6 +35,10 @@ exit_handler()
 }
 
 # Auto port forward ports.
+upnp-delete-port 28015
+upnp-delete-port 28016
+upnp-delete-port 8080
+
 upnp-add-port 28015
 upnp-add-port 28016
 upnp-add-port 8080

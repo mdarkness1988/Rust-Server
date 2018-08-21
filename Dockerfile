@@ -24,6 +24,9 @@ RUN rm -fr /usr/share/nginx/html/* && \
 COPY upnp-add-port /usr/bin/upnp-add-port
 RUN chmod +x /usr/bin/upnp-add-port
 
+COPY upnp-delete-port /usr/bin/upnp-delete-port
+RUN chmod +x /usr/bin/upnp-delete-port
+
 
 # Install webrcon (specific commit)
 COPY nginx_rcon.conf /etc/nginx/nginx.conf
