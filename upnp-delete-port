@@ -4,4 +4,5 @@ u = miniupnpc.UPnP()
 u.discoverdelay=200;u.discover();u.selectigd()
 
 import sys; portNo = int(sys.argv[-1])
-u.deleteportmapping(portNo,'TCP/UDP')
+u.deleteportmapping(portNo,'TCP')
+u.deleteportmapping(portNo,'UDP')
