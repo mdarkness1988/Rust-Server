@@ -102,6 +102,5 @@ ENV STEAMPW ""
 
 ENV RESTARTING "false"
 
-
 # Start the server
 ENTRYPOINT ["./start.sh"]
