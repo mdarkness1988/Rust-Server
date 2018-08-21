@@ -1,7 +1,5 @@
 # Rust server that runs inside a Docker container
 
-*Show your support for this project by signing up for a [free Bitrise account!](https://app.bitrise.io?referrer=02c20c56fa07adcb)*
-
 ---
 
 **DISCLAIMER:**
@@ -11,22 +9,36 @@ Cracked or pirated versions of Rust are not supported in any way, shape or form.
 
 ---
 
-[![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/didstopia/rust-server)
+[![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/mdarkness1988/rust-server)
 
-**TUTORIAL**: We've written a guide on how to use this image [here](http://rust.didscraft.com/rust-server-on-linux-using-docker/).
+**FEATURES**
+
+       1. Automatic updates on release (Default: Enabled in config)
+       2. Auto Wipe on server updates
+       3. Login with Stean username and password if required
+       4. UPnP support for auto port forwarding when running server (Default: Enabled in config)
+       5. MORE YET TO COME
+
+
+
+# TUTORIAL:
+**If you want to manually install this container you can by these simple steps**
+
+1. Add new container under Docker tab.
+2. Give the container a name you prefer.
+3. Add ``` mdarkness1988/rust-server ``` in Repository.
+4. Add the variables you want from the list below.
+5. Add ports to container, (8080/TCP, 28015/TCP&UDP, 28016/TCP).
+6. Save Template and RUN :)
 
 **NOTE**: This image will install/update on startup. The path ```/steamcmd/rust``` can be mounted on the host for data persistence.  
 Also note that this image provides the new web-based RCON, so you should set ```RUST_RCON_PASSWORD``` to a more secure password.
 This image also supports having a modded server (using Oxide), check the ```RUST_OXIDE_ENABLED``` variable below.
 
-# How to run the server
-1. Set the environment variables you wish to modify from below (note the RCON password!)
-2. Optionally mount ```/steamcmd/rust``` somewhere on the host or inside another container to keep your data safe
-3. Enjoy!
 
-The following environment variables are available:
+The following environment variables are available if you wish to modify the template:
 ```
-RUST_SERVER_STARTUP_ARGUMENTS (DEFAULT: "-batchmode -load +server.secure 1")
+RUST_SERVER_STARTUP_ARGUMENTS (DEFAULT: "")
 RUST_SERVER_IDENTITY (DEFAULT: "docker" - Mainly used for the name of the save directory)
 RUST_SERVER_SEED (DEFAULT: "0" - The server map seed, must be an integer)
 RUST_SERVER_WORLDSIZE (DEFAULT: "3500" - The map size, must be an integer)
@@ -45,8 +57,13 @@ RUST_UPDATE_BRANCH (DEFAULT: "public" - Set to match the branch that you want to
 RUST_START_MODE (DEFAULT: "0" - Determines if the server should update and then start (0), only update (1) or only start (2))
 RUST_OXIDE_ENABLED (DEFAULT: "0" - Set to 1 to automatically install the latest version of Oxide)
 RUST_OXIDE_UPDATE_ON_BOOT (DEFAULT: "1" - Set to 0 to disable automatic update of Oxide on boot)
+RUST_SERVER_SECURE (DEFAULT: "1" - Set to 0 to disable Anti-Hack)
+RUST_SERVER_FPS (DEFAULT: "-1" - Limits how many times the server renders objects per second. -1 is no limit)
+RUST_SERVER_UPDATEBATCH (DEFAULT: "256” - How fast to update objects in game. More info online <server.updatebatch>)
 STEAMUSER (DEFAULT: "BLANK" - Keep it empty for anonymous login else enter your steam username (CAP Sensitive))
 STEAMPW (DEFAULT: "BLANK" - Enter your steam password (CAP Sensitive) if you have entered username into STEAMUSER)
+UPNP (DEFAULT: "1" - Enable or disable the option for the server to open your ports automaticly if you wish to access the server outside your network)
+
 ```
 
 # Logging and rotating logs
@@ -57,10 +74,6 @@ When the server starts up or restarts, it will move old logs to `logs/archive/`.
 
 # How to send or receive command to/from the server
 
-We recently added a small application, called *rcon*, that can both send and receive messages to the server, much like the console on the Windows version, but this happens to use RCON (webrcon).
-To use it, simply run the following on the host: `docker exec rust-server rcon say Hello World`, substituting *rust-server* for your own container name.
-
-# Anything else
-
-If you need help, have questions or bug submissions, feel free to contact me **@Dids** on Twitter, and on the *Rust Server Owners* Slack community.
+A small application, called *rcon*, that can both send and receive messages to the server, much like the console on the Windows version, but this happens to use RCON (webrcon).
+To use it, simply run the following on the host: `docker exec rust-server rcon say Hello World`, substituting *rust-server* for your own container name
 
