@@ -102,7 +102,6 @@ echo "app_update 258550 validate" >> /install.txt
 echo "quit" >> /install.txt
 
 fi
-fi
 
 
 
