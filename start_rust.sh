@@ -31,13 +31,15 @@ if [ "$UPNP" = "1" ]; then
 upnp-delete-port 8080
 upnp-delete-port 28015
 upnp-delete-port 28016
+echo ""
+echo ""
 echo "Port forwarding has closed ports.."
 fi
 
 	pkill -f nginx
 
 	#kill -TERM "$child"
-
+   echo ""
 	echo "Exiting.."
 	exit
 }
@@ -45,10 +47,21 @@ fi
 # Auto port forward ports.
 
 if [ "$UPNP" = "1" ]; then
+echo "Port forwarding was enabled"
+echo "Starting Port Forwarding....."
 upnp-add-port 8080
 upnp-add-port 28015
 upnp-add-port 28016
-echo "Port forwarding has opened ports.."
+sleep 3
+echo "Port forwarding has opened ports"
+sleep 2
+echo ""
+echo ""
+else
+echo "Port forwarding is disabled in settings"
+echo ""
+echo ""
+sleep 3
 fi
 
 
@@ -61,6 +74,9 @@ find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 
 RESTARTING="false" 
 echo "SERVER HAS BEEN WIPED" 
+echo ""
+echo ""
+sleep 5
 fi
 
 # Trap specific signals and forward to the exit handler
@@ -244,7 +260,6 @@ if [ "$LOGROTATE_ENABLED" = "1" ]; then
 	echo "Log rotation enabled!"
 
 	# Log to stdout by default
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND -logfile /dev/stdout"
 	echo "Using startup arguments: $RUST_SERVER_STARTUP_ARGUMENTS"
 
 	# Create the logging directory structure
@@ -272,14 +287,23 @@ cd /steamcmd/rust
 
 # Run the server
 echo "Starting Rust.."
-if [ "$LOGROTATE_ENABLED" = "1" ]; then
-	unbuffer /steamcmd/rust/RustDedicated -batchmode -load $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+if [ "$LOGROTATE_ENABLED" = "1" ]; then 
+unbuffer /steamcmd/rust/RustDedicated -rcon.password $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated -batchmode -load $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
+	/steamcmd/rust/RustDedicated -rcon.password $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
 fi
 
 child=$!
 wait "$child"
+   
+if [ "$UPNP" = "1" ]; then
+upnp-delete-port 8080
+upnp-delete-port 28015
+upnp-delete-port 28016
+echo ""
+echo ""
+echo "Port forwarding has closed ports.."
+fi
 
 pkill -f nginx
 
