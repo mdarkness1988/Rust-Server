@@ -12,11 +12,12 @@ Cracked or pirated versions of Rust are not supported in any way, shape or form.
 [![Install on DigitalOcean](http://installer.71m.us/button.svg)](http://installer.71m.us/install?url=https://github.com/mdarkness1988/rust-server)
 
 **FEATURES**
+
        1. Automatic updates on release (Default: Enabled in config)
        2. Auto Wipe on server updates
        3. Login with Stean username and password if required
        4. UPnP support for auto port forwarding when running server (Default: Enabled in config)
-       5. MORE YET TO COME....
+       5. MORE YET TO COME
 
 
 
