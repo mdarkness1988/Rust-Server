@@ -34,7 +34,7 @@ exit_handler()
 	exit
 }
 
-
+ 
 
 if [ "$RESTARTING" = "true" ]; then
 
