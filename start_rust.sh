@@ -41,6 +41,8 @@ fi
 	#kill -TERM "$child"
    echo ""
 	echo "Exiting.."
+   sleep 2
+   clear
 	exit
 }
 
