@@ -35,6 +35,8 @@ exit_handler()
 }
 
 # Auto port forward ports.
+
+if [ "$UPNP" = "1" ]; then
 upnp-delete-port 28015
 upnp-delete-port 28016
 upnp-delete-port 8080
@@ -42,6 +44,8 @@ upnp-delete-port 8080
 upnp-add-port 28015
 upnp-add-port 28016
 upnp-add-port 8080
+fi
+
 
 if [ "$RESTARTING" = "true" ]; then
 
