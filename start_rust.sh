@@ -11,14 +11,14 @@ exit_handler()
 		if [ ! -d "/steamcmd/rust/bak" ]; then
 			mkdir -p /steamcmd/rust/bak
 		fi
-		if [ -f "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/UserPersistence.db" ]; then
+		if [ -f "/steamcmd/rust/server/$IDENTITY/UserPersistence.db" ]; then
 			# Backup all the current unlocked blueprint data
-			cp -fr "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/UserPersistence*.db" "/steamcmd/rust/bak/"
+			cp -fr "/steamcmd/rust/server/$IDENTITY/UserPersistence*.db" "/steamcmd/rust/bak/"
 		fi
 
-		if [ -f "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/xp.db" ]; then
+		if [ -f "/steamcmd/rust/server/$IDENTITY/xp.db" ]; then
 			# Backup all the current XP data
-			cp -fr "/steamcmd/rust/server/$RUST_SERVER_IDENTITY/xp*.db" "/steamcmd/rust/bak/"
+			cp -fr "/steamcmd/rust/server/$IDENTITY/xp*.db" "/steamcmd/rust/bak/"
 		fi
 	fi
 
@@ -27,10 +27,10 @@ exit_handler()
 	node /shutdown_app/app.js
 	sleep 5
    
-if [ "$UPNP" = "1" ]; then
-upnp-delete-port 8080
-upnp-delete-port 28015
-upnp-delete-port 28016
+if [ "$PUBLIC" = "1" ]; then
+upnp-delete-port "$PORTFORWARD_WEB"
+upnp-delete-port "$PORTFORWARD_RUST"
+upnp-delete-port "$PORTFORWARD_RCON"
 sleep 3
 echo ""
 echo ""
@@ -47,14 +47,80 @@ fi
 	exit
 }
 
+#DEFAULT VARIABLES.
+RCONWEB="1"
+
+
+#CHECHING PERFORMANCE MODE.
+if [ "$PERFORMANCE" = "1" ]; then
+SECURE="1"
+FPS="60"
+UPDATEBATCH="128"
+AI_TICKRATE="3"
+TICKRATE="10"
+STARTMODE="0"
+SPAWNRATE_MIN="0,1"
+SPAWNRATE_MAX="1,5"
+SPAWNDENSITY_MIN="0,1"
+SPAWNDENSITY_MAX="1,5"
+
+elif [ "$PERFORMANCE" = "2" ]; then
+SECURE="1"
+FPS="256"
+UPDATEBATCH="256"
+AI_TICKRATE="5"
+TICKRATE="10"
+STARTMODE="0"
+SPAWNRATE_MIN="0,2"
+SPAWNRATE_MAX="2"
+SPAWNDENSITY_MIN="0,2"
+SPAWNDENSITY_MAX="2"
+
+elif [ "$PERFORMANCE" = "3" ]; then
+SECURE="1"
+FPS="-1"
+UPDATEBATCH="512"
+AI_TICKRATE="7"
+TICKRATE="30"
+STARTMODE="0"
+SPAWNRATE_MIN="0,5"
+SPAWNRATE_MAX="3"
+SPAWNDENSITY_MIN="0,5"
+SPAWNDENSITY_MAX="3"
+fi
+
+#AUTO MAINTENANCE.
+if [ "$AUTO" = "1" ]; then
+STARTMODE="0"
+OXIDE_UPDATE="1"
+else
+STARTMODE="0"
+OXIDE_UPDATE="0"
+fi
+
+
+if [ "$MAPSIZE" = "tiny" ]; then
+MSIZE="1000”
+elif [ "$MAPSIZE" = "small" ]; then
+MSIZE="2000”
+elif [ "$MAPSIZE" = "medium" ]; then
+MSIZE="3500”
+elif [ "$MAPSIZE" = "large" ]; then
+MSIZE="6000”
+elif [ "$MAPSIZE" = "massive" ]; then
+MSIZE="8000”
+fi
+
+
+
 # Auto port forward ports.
 
-if [ "$UPNP" = "1" ]; then
+if [ "$PUBLIC" = "1" ]; then
 echo "Port forwarding was enabled"
 echo "Starting Port Forwarding....."
-upnp-add-port 8080
-upnp-add-port 28015
-upnp-add-port 28016
+upnp-add-port "$PORTFORWARD_WEB"
+upnp-add-port "$PORTFORWARD_RUST"
+upnp-add-port "$PORTFORWARD_RCON"
 sleep 3
 echo "Port forwarding has opened ports"
 sleep 2
@@ -68,14 +134,14 @@ sleep 3
 fi
 
 
-if [ "$RESTARTING" = "true" ]; then
+if [ "$WIPE" = "true" ]; then
 
 serveridentitydir="/steamcmd/rust/server/${RUST_SERVER_IDENTITY}"
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
 find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 
-RESTARTING="false" 
+WIPE="false" 
 echo "SERVER HAS BEEN WIPED" 
 echo ""
 echo ""
@@ -99,32 +165,6 @@ echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
 
 
-
-if [ -z "$STEAMUSER" ]; then
-echo "" > /install.txt
-echo "@sSteamCmdForcePlatformType linux" >> /install.txt
-echo "login anonymous" >> /install.txt
-echo "force_install_dir /steamcmd/rust" >> /install.txt
-echo "app_info_update 1" >> /install.txt
-echo "app_update 258550 validate" >> /install.txt
-echo "quit" >> /install.txt
-
-elif [ -z "$STEAMPW" ]; then
-echo "Please enter steam password"
-exit
-else
-
-echo "" > /install.txt
-echo "@sSteamCmdForcePlatformType linux" >> /install.txt
-echo "login $STEAMUSER $STEAMPW" >> /install.txt
-echo "force_install_dir /steamcmd/rust" >> /install.txt
-echo "app_info_update 1" >> /install.txt
-echo "app_update 258550 validate" >> /install.txt
-echo "quit" >> /install.txt
-fi
-
-
-
 # Check which branch to use
 if [ ! -z ${RUST_BRANCH+x} ]; then
 	echo "Using branch arguments: $RUST_BRANCH"
@@ -134,7 +174,7 @@ else
 fi
 
 # Disable auto-update if start mode is 2
-if [ "$RUST_START_MODE" = "2" ]; then
+if [ "$STARTMODE" = "2" ]; then
 	# Check that Rust exists in the first place
 	if [ ! -f "/steamcmd/rust/RustDedicated" ]; then
 		# Install Rust from install.txt
@@ -176,13 +216,13 @@ fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/steamcmd/rust/RustDedicated_Data/Plugins/x86_64
 
 # Check if Oxide is enabled
-if [ "$RUST_OXIDE_ENABLED" = "1" ]; then
+if [ "$OXIDE" = "1" ]; then
 	# Next check if Oxide doesn't' exist, or if we want to always update it
 	INSTALL_OXIDE="0"
 	if [ ! -f "/steamcmd/rust/CSharpCompiler.x86_x64" ]; then
 		INSTALL_OXIDE="1"
 	fi
-	if [ "$RUST_OXIDE_UPDATE_ON_BOOT" = "1" ]; then
+	if [ "$OXIDE_UPDATE" = "1" ]; then
 		INSTALL_OXIDE="1"
 	fi
 
@@ -199,23 +239,23 @@ if [ "$RUST_OXIDE_ENABLED" = "1" ]; then
 fi
 
 # Start mode 1 means we only want to update
-if [ "$RUST_START_MODE" = "1" ]; then
+if [ "$STARTMODE" = "1" ]; then
 	echo "Exiting, start mode is 1.."
 	exit
 fi
 
 # Add RCON support if necessary
-RUST_STARTUP_COMMAND=$RUST_SERVER_STARTUP_ARGUMENTS
-if [ ! -z ${RUST_RCON_PORT+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $RUST_RCON_PORT"
+RUST_STARTUP_COMMAND=$ARGUMENTS
+if [ ! -z ${$PORTFORWARD_RCON+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $PORTFORWARD_RCON"
 fi
-if [ ! -z ${RUST_RCON_PASSWORD+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $RUST_RCON_PASSWORD"
+if [ ! -z ${RCONPW+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $RCONPW"
 fi
 
-if [ ! -z ${RUST_RCON_WEB+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.web $RUST_RCON_WEB"
-	if [ "$RUST_RCON_WEB" = "1" ]; then
+if [ ! -z ${RCONWEB+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.web $RCONWEB"
+	if [ "$RCONWEB" = "1" ]; then
 		# Fix the webrcon (customizes a few elements)
 		bash /tmp/fix_conn.sh
 
@@ -234,8 +274,8 @@ if [ -f "/steamcmd/rust/seed_override" ]; then
 	echo "Found seed override: $RUST_SEED_OVERRIDE"
 
 	# Modify the server identity to include the override seed
-	RUST_SERVER_IDENTITY=$RUST_SEED_OVERRIDE
-	RUST_SERVER_SEED=$RUST_SEED_OVERRIDE
+	IDENTITY=$RUST_SEED_OVERRIDE
+	MAPSEED=$RUST_SEED_OVERRIDE
 
 	# Prepare the identity directory (if it doesn't exist)
 	if [ ! -d "/steamcmd/rust/server/$RUST_SEED_OVERRIDE" ]; then
@@ -263,7 +303,7 @@ if [ "$LOGROTATE_ENABLED" = "1" ]; then
 	echo "Log rotation enabled!"
 
 	# Log to stdout by default
-	echo "Using startup arguments: $RUST_SERVER_STARTUP_ARGUMENTS"
+	echo "Using startup arguments: $ARGUMENTS"
 
 	# Create the logging directory structure
 	if [ ! -d "/steamcmd/rust/logs/archive" ]; then
@@ -272,7 +312,7 @@ if [ "$LOGROTATE_ENABLED" = "1" ]; then
 
 	# Set the logfile filename/path
 	DATE=$(date '+%Y-%m-%d_%H-%M-%S')
-	RUST_SERVER_LOG_FILE="/steamcmd/rust/logs/$RUST_SERVER_IDENTITY"_"$DATE.txt"
+	RUST_SERVER_LOG_FILE="/steamcmd/rust/logs/$IDENTITY"_"$DATE.txt"
 
 	# Archive old logs
 	echo "Cleaning up old logs.."
@@ -291,16 +331,16 @@ cd /steamcmd/rust
 # Run the server
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then 
-unbuffer /steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL" 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+unbuffer /steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated $RUST_STARTUP_COMMAND +server.identity "$RUST_SERVER_IDENTITY" +server.seed "$RUST_SERVER_SEED"  +server.hostname "$RUST_SERVER_NAME" +server.url "$RUST_SERVER_URL" +server.headerimage "$RUST_SERVER_BANNER_URL" +server.description "$RUST_SERVER_DESCRIPTION" +server.worldsize "$RUST_SERVER_WORLDSIZE" +server.maxplayers "$RUST_SERVER_MAXPLAYERS" +fps.limit "$RUST_SERVER_FPS" +server.secure "$RUST_SERVER_SECURE" +server.updatebatch "$RUST_SERVER_UPDATEBATCH" +server.saveinterval "$RUST_SERVER_SAVE_INTERVAL"  2>&1 &
+	/steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 &
 fi
 
  
-if [ "$UPNP" = "1" ]; then
-upnp-delete-port 8080
-upnp-delete-port 28015
-upnp-delete-port 28016
+if [ "$PUBLIC" = "1" ]; then
+upnp-delete-port "$PORTFORWARD_WEB"
+upnp-delete-port "$PORTFORWARD_RUST"
+upnp-delete-port "$PORTFORWARD_RCON"
 echo ""
 echo ""
 sleep 3
