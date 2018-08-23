@@ -63,8 +63,7 @@ SPAWNRATE_MIN="0,1"
 SPAWNRATE_MAX="1,5"
 SPAWNDENSITY_MIN="0,1"
 SPAWNDENSITY_MAX="1,5"
-else
-if [ "$PERFORMANCE" = "2" ]; then
+elif [ "$PERFORMANCE" = "2" ]; then
   SECURE="1"
   FPS="256"
   UPDATEBATCH="256"
@@ -75,8 +74,7 @@ if [ "$PERFORMANCE" = "2" ]; then
   SPAWNRATE_MAX="2"
   SPAWNDENSITY_MIN="0,2"
   SPAWNDENSITY_MAX="2"
-else
-if [ "$PERFORMANCE" = "3" ]; then
+elif [ "$PERFORMANCE" = "3" ]; then
     SECURE="1"
     FPS="-1"
     UPDATEBATCH="512"
@@ -89,8 +87,6 @@ if [ "$PERFORMANCE" = "3" ]; then
     SPAWNDENSITY_MAX="3"
 else
 exit
-fi
-fi
 fi
 
 #AUTO MAINTENANCE.
@@ -108,22 +104,14 @@ MPSIZE="1000"
 else
 if [ "$MAPSIZE" = "small" ]; then
 MPSIZE="2000"
-else
-if [ "$MAPSIZE" = "medium" ]; then
+elif [ "$MAPSIZE" = "medium" ]; then
 MPSIZE="3500"
-else
-if [ "$MAPSIZE" = "large" ]; then
+elif [ "$MAPSIZE" = "large" ]; then
 MPSIZE="6000"
-else
-if [ "$MAPSIZE" = "massive" ]; then
+elif [ "$MAPSIZE" = "massive" ]; then
 MPSIZE="8000"
 else
 exit
-fi
-fi
-fi
-fi
-fi
 fi
 
 
