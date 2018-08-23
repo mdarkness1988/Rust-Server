@@ -104,19 +104,19 @@ fi
 
 
 if [ "$MAPSIZE" = "tiny" ]; then
-MSIZE="1000”
+MPSIZE="1000”
 else
 if [ "$MAPSIZE" = "small" ]; then
-MSIZE="2000”
+MPSIZE="2000”
 else
 if [ "$MAPSIZE" = "medium" ]; then
-MSIZE="3500”
+MPSIZE="3500”
 else
 if [ "$MAPSIZE" = "large" ]; then
-MSIZE="6000”
+MPSIZE="6000”
 else
 if [ "$MAPSIZE" = "massive" ]; then
-MSIZE="8000”
+MPSIZE="8000”
 else
 exit
 fi
