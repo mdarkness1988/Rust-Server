@@ -79,10 +79,10 @@ COPY README.md LICENSE.md /
 WORKDIR /
 
 # Expose necessary ports
-# EXPOSE 8080/TCP
-# EXPOSE 28015/TCP
-# EXPOSE 28015/UDP
-# EXPOSE 28016/TCP
+EXPOSE 8080/TCP
+EXPOSE 28015/TCP
+EXPOSE 28015/UDP
+EXPOSE 28016/TCP
 
 # Setup default environment variables for the server
 ENV NAME ""
