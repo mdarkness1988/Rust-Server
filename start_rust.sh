@@ -248,7 +248,7 @@ fi
 
 # Add RCON support if necessary
 RUST_STARTUP_COMMAND=$ARGUMENTS
-if [ ! -z ${$PORTFORWARD_RCON+x} ]; then
+if [ ! -z ${PORTFORWARD_RCON+x} ]; then
 	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $PORTFORWARD_RCON"
 fi
 if [ ! -z ${RCONPW+x} ]; then
