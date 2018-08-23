@@ -27,7 +27,7 @@ exit_handler()
 	node /shutdown_app/app.js
 	sleep 5
    
-if [ "$PPPP" = "1" ]; then
+if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
 upnp-delete-port "$PORTFORWARD_RCON"
@@ -104,19 +104,19 @@ fi
 
 
 if [ "$MAPSIZE" = "tiny" ]; then
-MPSIZE="1000”
+MPSIZE="1000"
 else
 if [ "$MAPSIZE" = "small" ]; then
-MPSIZE="2000”
+MPSIZE="2000"
 else
 if [ "$MAPSIZE" = "medium" ]; then
-MPSIZE="3500”
+MPSIZE="3500"
 else
 if [ "$MAPSIZE" = "large" ]; then
-MPSIZE="6000”
+MPSIZE="6000"
 else
 if [ "$MAPSIZE" = "massive" ]; then
-MPSIZE="8000”
+MPSIZE="8000"
 else
 exit
 fi
@@ -130,7 +130,7 @@ fi
 
 # Auto port forward ports.
 
-if [ "$PPPP" = "1" ]; then
+if [ "$PUBLIC" = "1" ]; then
 echo "Port forwarding was enabled"
 echo "Starting Port Forwarding....."
 upnp-add-port "$PORTFORWARD_WEB"
@@ -352,7 +352,7 @@ else
 fi
 
  
-if [ "$PPPP" = "1" ]; then
+if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
 upnp-delete-port "$PORTFORWARD_RCON"
