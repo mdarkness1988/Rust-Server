@@ -27,7 +27,7 @@ exit_handler()
 	node /shutdown_app/app.js
 	sleep 5
    
-if [ "$PUBLIC" = "1" ]; then
+if [ "$PORTFORWARD" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
 upnp-delete-port "$PORTFORWARD_RCON"
@@ -129,7 +129,7 @@ fi
 
 # Auto port forward ports.
 
-if [ "$PUBLIC" = "1" ]; then
+if [ "$PORTFORWARD" = "1" ]; then
 echo "Port forwarding was enabled"
 echo "Starting Port Forwarding....."
 upnp-add-port "$PORTFORWARD_WEB"
@@ -345,13 +345,13 @@ cd /steamcmd/rust
 # Run the server
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then 
-unbuffer /steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+unbuffer /steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 &
+	/steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 &
 fi
 
  
-if [ "$PUBLIC" = "1" ]; then
+if [ "$PORTFORWARD" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
 upnp-delete-port "$PORTFORWARD_RCON"
