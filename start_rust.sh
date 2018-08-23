@@ -86,7 +86,7 @@ elif [ "$PERFORMANCE" = "3" ]; then
     SPAWNDENSITY_MIN="0,5"
     SPAWNDENSITY_MAX="3"
 else
-true
+exit
 fi
 
 #AUTO MAINTENANCE.
@@ -102,15 +102,15 @@ fi
 if [ "$MAPSIZE" = "tiny" ]; then
 MSIZE="1000”
 elif [ "$MAPSIZE" = "small" ]; then
-  MSIZE="2000”
+MSIZE="2000”
 elif [ "$MAPSIZE" = "medium" ]; then
-    MSIZE="3500”
+MSIZE="3500”
 elif [ "$MAPSIZE" = "large" ]; then
-      MSIZE="6000”
+MSIZE="6000”
 elif [ "$MAPSIZE" = "massive" ]; then
-        MSIZE="8000”
+MSIZE="8000”
 else
-true
+exit
 fi
 
 
