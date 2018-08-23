@@ -64,29 +64,31 @@ SPAWNRATE_MAX="1,5"
 SPAWNDENSITY_MIN="0,1"
 SPAWNDENSITY_MAX="1,5"
 
-elif [ "$PERFORMANCE" = "2" ]; then
-SECURE="1"
-FPS="256"
-UPDATEBATCH="256"
-AI_TICKRATE="5"
-TICKRATE="10"
-STARTMODE="0"
-SPAWNRATE_MIN="0,2"
-SPAWNRATE_MAX="2"
-SPAWNDENSITY_MIN="0,2"
-SPAWNDENSITY_MAX="2"
+  elif [ "$PERFORMANCE" = "2" ]; then
+  SECURE="1"
+  FPS="256"
+  UPDATEBATCH="256"
+  AI_TICKRATE="5"
+  TICKRATE="10"
+  STARTMODE="0"
+  SPAWNRATE_MIN="0,2"
+  SPAWNRATE_MAX="2"
+  SPAWNDENSITY_MIN="0,2"
+  SPAWNDENSITY_MAX="2"
 
-elif [ "$PERFORMANCE" = "3" ]; then
-SECURE="1"
-FPS="-1"
-UPDATEBATCH="512"
-AI_TICKRATE="7"
-TICKRATE="30"
-STARTMODE="0"
-SPAWNRATE_MIN="0,5"
-SPAWNRATE_MAX="3"
-SPAWNDENSITY_MIN="0,5"
-SPAWNDENSITY_MAX="3"
+    elif [ "$PERFORMANCE" = "3" ]; then
+    SECURE="1"
+    FPS="-1"
+    UPDATEBATCH="512"
+    AI_TICKRATE="7"
+    TICKRATE="30"
+    STARTMODE="0"
+    SPAWNRATE_MIN="0,5"
+    SPAWNRATE_MAX="3"
+    SPAWNDENSITY_MIN="0,5"
+    SPAWNDENSITY_MAX="3"
+    else
+  fi
 fi
 
 
@@ -102,17 +104,18 @@ fi
 
 if [ "$MAPSIZE" = "tiny" ]; then
 MSIZE="1000”
-elif [ "$MAPSIZE" = "small" ]; then
-MSIZE="2000”
-elif [ "$MAPSIZE" = "medium" ]; then
-MSIZE="3500”
-elif [ "$MAPSIZE" = "large" ]; then
-MSIZE="6000”
-elif [ "$MAPSIZE" = "massive" ]; then
-MSIZE="8000”
-fi
-fi
-fi
+  elif [ "$MAPSIZE" = "small" ]; then
+  MSIZE="2000”
+    elif [ "$MAPSIZE" = "medium" ]; then
+    MSIZE="3500”
+      elif [ "$MAPSIZE" = "large" ]; then
+      MSIZE="6000”
+        elif [ "$MAPSIZE" = "massive" ]; then
+        MSIZE="8000”
+        else
+      fi
+    fi
+  fi
 fi
 
 
