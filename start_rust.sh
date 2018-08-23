@@ -101,8 +101,7 @@ fi
 
 if [ "$MAPSIZE" = "tiny" ]; then
 MPSIZE="1000"
-else
-if [ "$MAPSIZE" = "small" ]; then
+elif [ "$MAPSIZE" = "small" ]; then
 MPSIZE="2000"
 elif [ "$MAPSIZE" = "medium" ]; then
 MPSIZE="3500"
