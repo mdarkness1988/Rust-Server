@@ -86,6 +86,7 @@ elif [ "$PERFORMANCE" = "3" ]; then
     SPAWNDENSITY_MIN="0,5"
     SPAWNDENSITY_MAX="3"
 else
+echo "Error: Please select performance"
 fi
 
 #AUTO MAINTENANCE.
@@ -110,6 +111,7 @@ MPSIZE="6000"
 elif [ "$MAPSIZE" = "massive" ]; then
 MPSIZE="8000"
 else
+echo "Error: Please select map size"
 fi
 
 
