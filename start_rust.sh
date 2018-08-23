@@ -87,10 +87,7 @@ SPAWNDENSITY_MAX="1,5"
     SPAWNRATE_MAX="3"
     SPAWNDENSITY_MIN="0,5"
     SPAWNDENSITY_MAX="3"
-    else
-  fi
 fi
-
 
 #AUTO MAINTENANCE.
 if [ "$AUTO" = "1" ]; then
@@ -112,10 +109,7 @@ MSIZE="1000”
       MSIZE="6000”
         elif [ "$MAPSIZE" = "massive" ]; then
         MSIZE="8000”
-        else
-      fi
-    fi
-  fi
+else
 fi
 
 
