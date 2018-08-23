@@ -63,7 +63,8 @@ SPAWNRATE_MIN="0,1"
 SPAWNRATE_MAX="1,5"
 SPAWNDENSITY_MIN="0,1"
 SPAWNDENSITY_MAX="1,5"
-else if [ "$PERFORMANCE" = "2" ]; then
+else
+if [ "$PERFORMANCE" = "2" ]; then
   SECURE="1"
   FPS="256"
   UPDATEBATCH="256"
@@ -74,7 +75,8 @@ else if [ "$PERFORMANCE" = "2" ]; then
   SPAWNRATE_MAX="2"
   SPAWNDENSITY_MIN="0,2"
   SPAWNDENSITY_MAX="2"
-else if [ "$PERFORMANCE" = "3" ]; then
+else
+if [ "$PERFORMANCE" = "3" ]; then
     SECURE="1"
     FPS="-1"
     UPDATEBATCH="512"
@@ -103,13 +105,17 @@ fi
 
 if [ "$MAPSIZE" = "tiny" ]; then
 MSIZE="1000”
-else if [ "$MAPSIZE" = "small" ]; then
+else
+if [ "$MAPSIZE" = "small" ]; then
 MSIZE="2000”
-else if [ "$MAPSIZE" = "medium" ]; then
+else
+if [ "$MAPSIZE" = "medium" ]; then
 MSIZE="3500”
-else if [ "$MAPSIZE" = "large" ]; then
+else
+if [ "$MAPSIZE" = "large" ]; then
 MSIZE="6000”
-else if [ "$MAPSIZE" = "massive" ]; then
+else
+if [ "$MAPSIZE" = "massive" ]; then
 MSIZE="8000”
 else
 exit
