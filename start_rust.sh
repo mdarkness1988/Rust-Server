@@ -27,7 +27,7 @@ exit_handler()
 	node /shutdown_app/app.js
 	sleep 5
    
-if [ "$PUBLIC_PORTS" = "1" ]; then
+if [ "$PPPP" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
 upnp-delete-port "$PORTFORWARD_RCON"
@@ -129,7 +129,7 @@ fi
 
 # Auto port forward ports.
 
-if [ "$PUBLIC_PORTS" = "1" ]; then
+if [ "$PPPP" = "1" ]; then
 echo "Port forwarding was enabled"
 echo "Starting Port Forwarding....."
 upnp-add-port "$PORTFORWARD_WEB"
@@ -351,7 +351,7 @@ else
 fi
 
  
-if [ "$PUBLIC_PORTS" = "1" ]; then
+if [ "$PPPP" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
 upnp-delete-port "$PORTFORWARD_RCON"
