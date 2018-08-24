@@ -53,7 +53,7 @@ RCONWEB="1"
 
 #CHECHING PERFORMANCE MODE.
 if [ "$PERFORMANCE" = "1" ]; then
-SECURE="1"
+SECURE="True"
 FPS="60"
 UPDATEBATCH="128"
 AI_TICKRATE="3"
@@ -64,7 +64,7 @@ SPAWNRATE_MAX="1,5"
 SPAWNDENSITY_MIN="0,1"
 SPAWNDENSITY_MAX="1,5"
 elif [ "$PERFORMANCE" = "2" ]; then
-  SECURE="1"
+  SECURE="True"
   FPS="256"
   UPDATEBATCH="256"
   AI_TICKRATE="5"
@@ -75,7 +75,7 @@ elif [ "$PERFORMANCE" = "2" ]; then
   SPAWNDENSITY_MIN="0,2"
   SPAWNDENSITY_MAX="2"
 elif [ "$PERFORMANCE" = "3" ]; then
-    SECURE="1"
+    SECURE="True"
     FPS="-1"
     UPDATEBATCH="512"
     AI_TICKRATE="7"
@@ -89,7 +89,16 @@ else
 echo "Error: Please select performance"
 fi
 
-#AUTO MAINTENANCE.
+# PVP SETTINGS
+if [ "$PVE" = "0" ]; then
+echo "PVP Mode"
+PVE_="False"
+else
+echo "PVE Mode"
+PVE_="True"
+fi
+
+# AUTO MAINTENANCE.
 if [ "$AUTO" = "1" ]; then
 STARTMODE="0"
 OXIDE_UPDATE="1"
@@ -333,9 +342,9 @@ cd /steamcmd/rust
 # Run the server
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then 
-unbuffer /steamcmd/rust/RustDedicated +batching.colliders 1 +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+unbuffer /steamcmd/rust/RustDedicated +batching.colliders 1 +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated +batching.colliders 1 +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE" $RUST_STARTUP_COMMAND 2>&1 &
+	/steamcmd/rust/RustDedicated +batching.colliders 1 +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +spawn.min_rate "$SPAWNRATE_MIN" +spawn.max_rate "$SPAWNRATE_MAX" +spawn.min_density "$SPAWNDENSITY_MIN" +spawn.max_density "$SPAWNDENSITY_MAX" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 &
 fi
 
  
