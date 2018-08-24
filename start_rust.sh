@@ -30,7 +30,7 @@ exit_handler()
 if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
-upnp-delete-port "$PORTFORWARD_RCON"
+upnp-delete-port "$RUST_RCON_PORT"
 sleep 3
 echo ""
 echo ""
@@ -122,7 +122,7 @@ echo "Port forwarding was enabled"
 echo "Starting Port Forwarding....."
 upnp-add-port "$PORTFORWARD_WEB"
 upnp-add-port "$PORTFORWARD_RUST"
-upnp-add-port "$PORTFORWARD_RCON"
+upnp-add-port "$RUST_RCON_PORT"
 sleep 3
 echo "Port forwarding has opened ports"
 sleep 2
@@ -138,7 +138,7 @@ fi
 
 if [ "$WIPE" = "true" ]; then
 
-serveridentitydir="/steamcmd/rust/server/${RUST_SERVER_IDENTITY}"
+serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
 find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
@@ -248,11 +248,11 @@ fi
 
 # Add RCON support if necessary
 RUST_STARTUP_COMMAND=$ARGUMENTS
-if [ ! -z ${PORTFORWARD_RCON+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $PORTFORWARD_RCON"
+if [ ! -z ${RUST_RCON_PORT+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $RUST_RCON_PORT"
 fi
-if [ ! -z ${RCONPW+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $RCONPW"
+if [ ! -z ${RUST_RCON_PASSWORD+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $RUST_RCON_PASSWORD"
 fi
 
 if [ ! -z ${RCONWEB+x} ]; then
@@ -342,7 +342,7 @@ fi
 if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
-upnp-delete-port "$PORTFORWARD_RCON"
+upnp-delete-port "$RUST_RCON_PORT"
 echo ""
 echo ""
 sleep 3
