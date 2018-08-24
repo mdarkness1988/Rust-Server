@@ -75,8 +75,8 @@ function restart()
    process.env.WIPE = 'true';
 
 	var serverHostname = 'localhost';
-	var serverPort = process.env.PORTFORWARD_RCON;
-	var serverPassword = process.env.RCONPW;
+	var serverPort = process.env.RUST_RCON_PORT;
+	var serverPassword = process.env.$RUST_RCON_PASSWORD;
 
 	var WebSocket = require('ws');
 	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
