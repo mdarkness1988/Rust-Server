@@ -17,7 +17,7 @@ trap 'rm -rf /tmp/update_check.lock' EXIT  # remove the lockdir on exit
 #fi
 
 # Check if we are auto-updating or not
-if [ "$RUST_UPDATE_CHECKING" = "1" ]; then
+if [ "$AUTO" = "1" ]; then
 	echo "Checking Steam for updates.."
 else
 	exit
@@ -30,9 +30,9 @@ if [ -f "/steamcmd/rust/build.id" ]; then
 fi
 
 # Minimal validation for the update branch
-STRING_SIZE=${#RUST_UPDATE_BRANCH}
+STRING_SIZE=${#RELEASE}
 if [ "$STRING_SIZE" -lt "1" ]; then
-	RUST_UPDATE_BRANCH=public
+	RELEASE=public
 fi
 
 # Remove the old cached app info if it exists
@@ -41,7 +41,7 @@ if [ -f "/root/Steam/appcache/appinfo.vdf" ]; then
 fi
 
 # Get the new build id directly from Steam
-NEW_BUILDID="$(./steamcmd/steamcmd.sh +login anonymous +app_info_update 1 +app_info_print "258550" +quit | grep -EA 1000 "^\s+\"branches\"$" | grep -EA 5 "^\s+\"$RUST_UPDATE_BRANCH\"$" | grep -m 1 -EB 10 "^\s+}$" | grep -E "^\s+\"buildid\"\s+" | tr '[:blank:]"' ' ' | tr -s ' ' | sed "s/ buildid //g" | xargs)"
+NEW_BUILDID="$(./steamcmd/steamcmd.sh +login anonymous +app_info_update 1 +app_info_print "258550" +quit | grep -EA 1000 "^\s+\"branches\"$" | grep -EA 5 "^\s+\"$RELEASE\"$" | grep -m 1 -EB 10 "^\s+}$" | grep -E "^\s+\"buildid\"\s+" | tr '[:blank:]"' ' ' | tr -s ' ' | sed "s/ buildid //g" | xargs)"
 
 # Check that we actually got a new build id
 STRING_SIZE=${#NEW_BUILDID}
