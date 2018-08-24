@@ -72,11 +72,11 @@ function restart()
 		return;
 	}
 	isRestarting = true;
-   process.env.RESTARTING = 'true';
+   process.env.WIPE = 'true';
 
 	var serverHostname = 'localhost';
 	var serverPort = process.env.RUST_RCON_PORT;
-	var serverPassword = process.env.RUST_RCON_PASSWORD;
+	var serverPassword = process.env.$RUST_RCON_PASSWORD;
 
 	var WebSocket = require('ws');
 	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
