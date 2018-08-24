@@ -231,7 +231,7 @@ if [ "$OXIDE" = "1" ]; then
 		echo "Downloading and installing latest Oxide.."
 		OXIDE_URL=$(curl -s https://api.github.com/repos/OxideMod/Oxide.Rust/releases/latest | grep browser_download_url | cut -d '"' -f 4)
 		curl -sL $OXIDE_URL | bsdtar -xvf- -C /steamcmd/rust/
-		chmod 755 /steamcmd/rust/Compiler.x86_x64 2>&1 /dev/null
+		chmod +x /steamcmd/rust/Compiler.x86_x64 2>&1 /dev/null
      # CSharpCompiler.x86_x64
 		
 		## NOTE: Disabled until I have time to properly fix this
