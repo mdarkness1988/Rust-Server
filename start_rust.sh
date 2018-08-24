@@ -336,15 +336,6 @@ else
 fi
 
  
-if [ "$PUBLIC" = "1" ]; then
-upnp-delete-port "$PORTFORWARD_WEB"
-upnp-delete-port "$PORTFORWARD_RUST"
-upnp-delete-port "$RUST_RCON_PORT"
-echo ""
-echo ""
-sleep 3
-echo "Port forwarding has closed ports.."
-fi
 
 child=$!
 wait "$child"
