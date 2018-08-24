@@ -5,6 +5,18 @@ exit_handler()
 {
 	echo "Shutdown signal received"
 
+
+   
+if [ "$PUBLIC" = "1" ]; then
+upnp-delete-port "$PORTFORWARD_WEB"
+upnp-delete-port "$PORTFORWARD_RUST"
+upnp-delete-port "$RUST_RCON_PORT"
+sleep 3
+echo ""
+echo ""
+echo "Port forwarding has closed ports.."
+fi
+
 	# Only do backups if we're using the seed override
 	if [ -f "/steamcmd/rust/seed_override" ]; then
 		# Create the backup directory if it doesn't exist
@@ -26,24 +38,13 @@ exit_handler()
 	# Execute the RCON shutdown command
 	node /shutdown_app/app.js
 	sleep 5
-   
-if [ "$PUBLIC" = "1" ]; then
-upnp-delete-port "$PORTFORWARD_WEB"
-upnp-delete-port "$PORTFORWARD_RUST"
-upnp-delete-port "$RUST_RCON_PORT"
-sleep 3
-echo ""
-echo ""
-echo "Port forwarding has closed ports.."
-fi
+
 
 	pkill -f nginx
 
 	#kill -TERM "$child"
    echo ""
 	echo "Exiting.."
-   sleep 2
-   clear
 	exit
 }
 
