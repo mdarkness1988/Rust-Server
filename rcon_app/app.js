@@ -17,8 +17,8 @@ if (argumentString.length < 1)
 //console.log("Relaying RCON command: " + argumentString);
 
 var serverHostname = 'localhost';
-var serverPort = process.env.PORTFORWARD_RCON;
-var serverPassword = process.env.RCONPW;
+var serverPort = process.env.RUST_RCON_PORT;
+var serverPassword = process.env.RUST_RCON_PASSWORD;
 
 var messageSent = false;
 var WebSocket = require('ws');
