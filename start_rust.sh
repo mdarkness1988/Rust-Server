@@ -148,7 +148,7 @@ fi
 #RUN AUTO WIPE
 ##############
 
-if [ -z "$WIPEDAYS" ] then
+if [ -z "$WIPEDAYS" ]; then
 echo "Auto wipe not set"
 else
 echo "Auto wipe has been set to wipe every $WIPEDAYS days"
@@ -158,7 +158,7 @@ chmod +x Autowipe.sh
 ./Autowipe.sh
 fi
 
-
+,
 
 ################################################
 # Trap specific signals and forward to the exit handler
