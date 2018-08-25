@@ -62,22 +62,22 @@ UPDATEBATCH="128"
 AI_TICKRATE="3"
 TICKRATE="10"
 STARTMODE="0"
-elif [ "$PERFORMANCE" = "2" ]; then
-  SECURE="True"
-  FPS="256"
-  UPDATEBATCH="256"
-  AI_TICKRATE="5"
-  TICKRATE="10"
-  STARTMODE="0"
-elif [ "$PERFORMANCE" = "3" ]; then
-    SECURE="True"
-    FPS="-1"
-    UPDATEBATCH="512"
-    AI_TICKRATE="6"
-    TICKRATE="30"
-    STARTMODE="0"
-else
-echo "Error: Please select performance"
+     elif [ "$PERFORMANCE" = "2" ]; then
+     SECURE="True"
+     FPS="256"
+     UPDATEBATCH="256"
+     AI_TICKRATE="5"
+     TICKRATE="10"
+     STARTMODE="0"
+          elif [ "$PERFORMANCE" = "3" ]; then
+          SECURE="True"
+          FPS="-1"
+          UPDATEBATCH="512"
+          AI_TICKRATE="6"
+          TICKRATE="30"
+          STARTMODE="0"
+     else
+  echo "Error: Please select performance"
 fi
 
 # PVP SETTINGS
@@ -148,33 +148,16 @@ fi
 #RUN AUTO WIPE
 ##############
 
-#./Autowipe.sh
-
-#################################################
-#mapfile="/steamcmd/rust/server/${IDENTITY}"
-#filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
-#if [[ $(find "$filename" -mtime +"$WIPEDAYS" -print) ]]; then
-
-#serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
-#find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
-#find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
-#find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
-#fi
-#################################################
-
-
-if [ "$WIPE" = "true" ]; then
-serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
-find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
-find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
-find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
-
-WIPE="false" 
-echo "SERVER HAS BEEN WIPED" 
+if [ -z "$WIPEDAYS" ] then
+echo "Auto wipe not set"
+else
+echo "Auto wipe has been set to wipe every $WIPEDAYS days"
 echo ""
 echo ""
-sleep 5
+chmod +x Autowipe.sh
+./Autowipe.sh
 fi
+
 
 
 ################################################
@@ -297,7 +280,7 @@ if [ "$OXIDE" = "1" ]; then
 	fi
 		
 		## NOTE: Disabled until I have time to properly fix this
-		#chown -R $PUID:$PGID /steamcmd/rust
+		chmod -R 777 /steamcmd/rust
 	fi
 fi
 
@@ -427,9 +410,9 @@ cd /steamcmd/rust
 
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then 
-unbuffer /steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
+unbuffer /steamcmd/rust/RustDedicated -batchmode -load +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
 else
-	/steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 &
+	/steamcmd/rust/RustDedicated -batchmode -load +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 &
 fi
 
  

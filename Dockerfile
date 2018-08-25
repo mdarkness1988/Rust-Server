@@ -26,6 +26,10 @@ RUN chmod +x /usr/bin/upnp-add-port
 COPY upnp-delete-port /usr/bin/upnp-delete-port
 RUN chmod +x /usr/bin/upnp-delete-port
 
+# COPY Autowipe.sh file
+COPY Autowipe.sh /Autowipe.sh
+RUN chmod +x /Autowipe.sh
+
 
 # Install webrcon (specific commit)
 COPY nginx_rcon.conf /etc/nginx/nginx.conf
@@ -35,6 +39,7 @@ RUN curl -sL https://github.com/Facepunch/webrcon/archive/24b0898d86706723d52bb4
 
 # Customize the webrcon package to fit our needs
 ADD fix_conn.sh /tmp/fix_conn.sh
+RUN chmod +x /temp/fix_conn.sh
 
 # Create and set the steamcmd folder as a volume
 RUN mkdir -p /steamcmd/rust
@@ -43,21 +48,31 @@ VOLUME ["/steamcmd/rust"]
 # Setup proper shutdown support
 ADD shutdown_app/ /shutdown_app/
 WORKDIR /shutdown_app
+RUN chmod -R 777 /shutdown_app
 RUN npm install
 
 # Setup restart support (for update automation)
 ADD restart_app/ /restart_app/
 WORKDIR /restart_app
+RUN chmod -R 777 /restart_app
+RUN npm install
+
+# Setup restart support (for wipe restart)
+ADD wipe-restart_app/ /wipe-restart_app/
+WORKDIR /wipe-restart_app
+RUN chmod -R 777 /wipe-restart_app
 RUN npm install
 
 # Setup scheduling support
 ADD scheduler_app/ /scheduler_app/
 WORKDIR /scheduler_app
+RUN chmod -R 777 /scheduler_app
 RUN npm install
 
 # Setup rcon command relay app
 ADD rcon_app/ /rcon_app/
 WORKDIR /rcon_app
+RUN chmod -R 777 /rcon_app
 RUN npm install
 RUN ln -s /rcon_app/app.js /usr/bin/rcon
 
@@ -104,7 +119,7 @@ ENV PVE ""
 ENV MAPSEED ""
 ENV SAVE_INTERVAL ""
 
-ENV WIPE "false"
+ENV WIPEDATE ""
 
 # Start the server
 ENTRYPOINT ["./start.sh"]
