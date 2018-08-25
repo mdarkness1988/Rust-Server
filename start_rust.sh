@@ -5,8 +5,6 @@ exit_handler()
 {
 	echo "Shutdown signal received"
 
-
-   
 if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
@@ -33,12 +31,10 @@ fi
 			cp -fr "/steamcmd/rust/server/$IDENTITY/xp*.db" "/steamcmd/rust/bak/"
 		fi
 	fi
-
 	
 	# Execute the RCON shutdown command
 	node /shutdown_app/app.js
 	sleep 5
-
 
 	pkill -f nginx
 
@@ -48,11 +44,17 @@ fi
 	exit
 }
 
+################################################
+
 #DEFAULT VARIABLES.
+#################
+
 RCONWEB="1"
 
 
 #CHECHING PERFORMANCE MODE.
+##########################
+
 if [ "$PERFORMANCE" = "1" ]; then
 SECURE="True"
 FPS="70"
@@ -79,6 +81,8 @@ echo "Error: Please select performance"
 fi
 
 # PVP SETTINGS
+#############
+
 if [ "$PVE" = "0" ]; then
 echo "PVP Mode"
 PVE_="False"
@@ -88,6 +92,8 @@ PVE_="True"
 fi
 
 # AUTO MAINTENANCE.
+##################
+
 if [ "$AUTO" = "1" ]; then
 STARTMODE="0"
 OXIDE_UPDATE="1"
@@ -96,6 +102,10 @@ STARTMODE="0"
 OXIDE_UPDATE="0"
 fi
 
+
+
+#SELECT MAP SIZE
+###############
 
 if [ "$MAPSIZE" = "tiny" ]; then
 MPSIZE="1000"
@@ -113,7 +123,8 @@ fi
 
 
 
-# Auto port forward ports.
+# AUTO PORT FORWARDING
+#####################
 
 if [ "$PUBLIC" = "1" ]; then
 echo "Port forwarding was enabled"
@@ -134,8 +145,25 @@ sleep 3
 fi
 
 
-if [ "$WIPE" = "true" ]; then
+#RUN AUTO WIPE
+##############
 
+#./Autowipe.sh
+
+#################################################
+#mapfile="/steamcmd/rust/server/${IDENTITY}"
+#filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
+#if [[ $(find "$filename" -mtime +"$WIPEDAYS" -print) ]]; then
+
+#serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
+#find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
+#find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
+#find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
+#fi
+#################################################
+
+
+if [ "$WIPE" = "true" ]; then
 serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
@@ -148,24 +176,38 @@ echo ""
 sleep 5
 fi
 
+
+################################################
 # Trap specific signals and forward to the exit handler
 trap 'exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
+################################################
 
-# Remove old locks
+# REMOVE OLD LOCK
+################
+
 rm -fr /tmp/*.lock
 
-# Create the necessary folder structure
+
+# CREATE THE NECESSARY FOLDER STRUCTURE
+####################################
+
 if [ ! -d "/steamcmd/rust" ]; then
 	echo "Creating folder structure.."
 	mkdir -p /steamcmd/rust
 fi
 
-# Install/update steamcmd
+
+
+# INSTALL/UPDATE STEAMCMD
+########################
+
 echo "Installing/updating steamcmd.."
 curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C /steamcmd -zx
 
 
-# Check which branch to use
+# CHECK WHICH BRANCH TO USE
+#########################
+
 if [ ! -z ${RUST_BRANCH+x} ]; then
 	echo "Using branch arguments: $RUST_BRANCH"
 	sed -i "s/app_update 258550.*validate/app_update 258550 $RUST_BRANCH validate/g" /install.txt
@@ -173,7 +215,10 @@ else
 	sed -i "s/app_update 258550.*validate/app_update 258550 validate/g" /install.txt
 fi
 
-# Disable auto-update if start mode is 2
+
+#DISABLE AUTO-UPDATE IF START MODE IS 2
+##################################
+
 if [ "$STARTMODE" = "2" ]; then
 	# Check that Rust exists in the first place
 	if [ ! -f "/steamcmd/rust/RustDedicated" ]; then
@@ -212,16 +257,29 @@ else
 	fi
 fi
 
-# Rust includes a 64-bit version of steamclient.so, so we need to tell the OS where it exists
+
+
+
+# TELL OS WERE 64-BIT VERSION OF STEAMCLIENT.SO IS
+################################################
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/steamcmd/rust/RustDedicated_Data/Plugins/x86_64
 
-# Check if Oxide is enabled
+
+
+#CHECK IF OXIDE IS ENABLED
+######################
+
 if [ "$OXIDE" = "1" ]; then
 	# Next check if Oxide doesn't' exist, or if we want to always update it
 	INSTALL_OXIDE="0"
-	if [ ! -f "/steamcmd/rust/Compiler.x86_x64" ]; then
-		INSTALL_OXIDE="1"
-	fi
+
+  if [ ! -f "/steamcmd/rust/Compiler.x86_x64" ]; then
+    if [ ! -f "/steamcmd/rust/CSharpCompiler.x86_x64" ]; then
+		  INSTALL_OXIDE="1"
+	 fi
+  fi
+
 	if [ "$OXIDE_UPDATE" = "1" ]; then
 		INSTALL_OXIDE="1"
 	fi
@@ -231,21 +289,33 @@ if [ "$OXIDE" = "1" ]; then
 		echo "Downloading and installing latest Oxide.."
 		OXIDE_URL=$(curl -s https://api.github.com/repos/OxideMod/Oxide.Rust/releases/latest | grep browser_download_url | cut -d '"' -f 4)
 		curl -sL $OXIDE_URL | bsdtar -xvf- -C /steamcmd/rust/
+
+	if [ -f "/steamcmd/rust/Compiler.x86_x64" ]; then
 		chmod +x /steamcmd/rust/Compiler.x86_x64 2>&1 /dev/null
-     # CSharpCompiler.x86_x64
+  elif [ -f "/steamcmd/rust/CSharpCompiler.x86_x64" ]; then
+     chmod +x /steamcmd/rust/CSharpCompiler.x86_x64 2>&1 /dev/null
+	fi
 		
 		## NOTE: Disabled until I have time to properly fix this
 		#chown -R $PUID:$PGID /steamcmd/rust
 	fi
 fi
 
-# Start mode 1 means we only want to update
+
+
+# START MODE 1: ONLY UPDATES
+#########################
+
 if [ "$STARTMODE" = "1" ]; then
 	echo "Exiting, start mode is 1.."
 	exit
 fi
 
-# Add RCON support if necessary
+
+
+# ADD RCON SUPPORT IF NECESSARY
+############################
+
 RUST_STARTUP_COMMAND=$ARGUMENTS
 if [ ! -z ${RUST_RCON_PORT+x} ]; then
 	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $RUST_RCON_PORT"
@@ -269,7 +339,11 @@ if [ ! -z ${RCONWEB+x} ]; then
 	fi
 fi
 
-# Check if a special seed override file exists
+
+
+# CHECK IF A SPECIAL SEED OVERRIDE FILE EXISTS
+######################################
+
 if [ -f "/steamcmd/rust/seed_override" ]; then
 	RUST_SEED_OVERRIDE=$(cat /steamcmd/rust/seed_override)
 	echo "Found seed override: $RUST_SEED_OVERRIDE"
@@ -278,7 +352,10 @@ if [ -f "/steamcmd/rust/seed_override" ]; then
 	IDENTITY=$RUST_SEED_OVERRIDE
 	MAPSEED=$RUST_SEED_OVERRIDE
 
-	# Prepare the identity directory (if it doesn't exist)
+
+
+  # PREPARE THE IDENTITY DIRECTORY (IF NOT EXIST)
+
 	if [ ! -d "/steamcmd/rust/server/$RUST_SEED_OVERRIDE" ]; then
 		echo "Creating seed override identity directory.."
 		mkdir -p "/steamcmd/rust/server/$RUST_SEED_OVERRIDE"
@@ -293,7 +370,11 @@ if [ -f "/steamcmd/rust/seed_override" ]; then
 	fi
 fi
 
-## Disable logrotate if "-logfile" is set in $RUST_STARTUP_COMMAND
+
+
+## DISABLE LOGROTATE IF "-LOGFILE" IS SET IN $RUST_STARTUP_COMMAND
+#########################################################
+
 LOGROTATE_ENABLED=1
 RUST_STARTUP_COMMAND_LOWERCASE=$(echo "$RUST_STARTUP_COMMAND" | sed 's/./\L&/g')
 if [[ $RUST_STARTUP_COMMAND_LOWERCASE == *" -logfile "* ]]; then
@@ -311,25 +392,39 @@ if [ "$LOGROTATE_ENABLED" = "1" ]; then
 		mkdir -p /steamcmd/rust/logs/archive
 	fi
 
-	# Set the logfile filename/path
+	# SET THE LOGFILE FILENAME/PATH
+
 	DATE=$(date '+%Y-%m-%d_%H-%M-%S')
 	RUST_SERVER_LOG_FILE="/steamcmd/rust/logs/$IDENTITY"_"$DATE.txt"
 
-	# Archive old logs
+	# ARCHIVE OLD LOGS
+
 	echo "Cleaning up old logs.."
 	mv /steamcmd/rust/logs/*.txt /steamcmd/rust/logs/archive
 else
 	echo "Log rotation disabled!"
 fi
 
-# Start cron
+
+
+# START CRON
+###########
+
 echo "Starting scheduled task manager.."
 node /scheduler_app/app.js &
 
-# Set the working directory
+
+
+# SET THE WORKING DIRECTORY
+########################
+
 cd /steamcmd/rust
 
-# Run the server
+
+
+# RUN THE SERVER
+###############
+
 echo "Starting Rust.."
 if [ "$LOGROTATE_ENABLED" = "1" ]; then 
 unbuffer /steamcmd/rust/RustDedicated +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 | grep --line-buffered -Ev '^\s*$|Filename' | tee $RUST_SERVER_LOG_FILE &
