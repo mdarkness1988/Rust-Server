@@ -158,7 +158,6 @@ chmod +x Autowipe.sh
 ./Autowipe.sh
 fi
 
-,
 
 ################################################
 # Trap specific signals and forward to the exit handler
