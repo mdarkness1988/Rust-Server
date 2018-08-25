@@ -155,7 +155,7 @@ echo "Auto wipe has been set to wipe every $WIPEDAYS days"
 echo ""
 echo ""
 chmod +x Autowipe.sh
-./Autowipe.sh
+bash /Autowipe.sh &
 fi
 
 
