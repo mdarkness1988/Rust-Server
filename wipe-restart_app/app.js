@@ -22,25 +22,25 @@ var isRestarting = false;
 console.log("Rcon Connected...")
 		setTimeout(function()
 		{
-			ws.send(createPacket("say NOTICE: Server is wiping in, So let the killing begin"));
+			ws.send("say NOTICE: Server is wiping in, So let the killing begin");
 			setTimeout(function()
 			{
-				ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots"));
+				ws.send("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots");
 				setTimeout(function()
 				{
-					ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>3 minutes</color>"));
+					ws.send("say <color=red>NOTICE:</color> Server is wiping in <color=orange>3 minutes</color>");
 					setTimeout(function()
 					{
-						ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>2 minutes</color>, Not long now"));
+						ws.send("say <color=red>NOTICE:</color> Server is wiping in <color=orange>2 minutes</color>, Not long now");
 						setTimeout(function()
 						{
-							ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>1 minute</color>, Goodbye world"));
+							ws.send("say <color=red>NOTICE:</color> Server is wiping in <color=orange>1 minute</color>, Goodbye world");
 							setTimeout(function()
 							{
-								ws.send(createPacket("global.kickall <color=orange>Wiping Server, Relog in 5 minutes</color>"));
+								ws.send("global.kickall <color=orange>Wiping Server, Relog in 5 minutes</color>");
 								setTimeout(function()
 								{
-									ws.send(createPacket("quit"));
+									ws.send("quit");
 									//ws.send(createPacket("restart 60")); // NOTE: Don't use restart, because that doesn't actually restart the container!
 									setTimeout(function()
 									{
@@ -65,13 +65,4 @@ console.log("Rcon Connected...")
 		}, 1000);
 	});
 
-function createPacket(command)
-{
-	var packet =
-	{
-		Identifier: -1,
-		Message: command,
-		Name: "WebRcon"
-	};
-	return JSON.stringify(packet);
-}
+
