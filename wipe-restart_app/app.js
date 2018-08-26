@@ -16,30 +16,30 @@ var isRestarting = false;
 	var serverPassword = process.env.$RUST_RCON_PASSWORD;
 
 	var WebSocket = require('ws');
-	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
-	ws.on('open', function open()
+	var wss = new WebSocket("wss://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+	wss.on('open', function open()
 	{
 		setTimeout(function()
 		{
-			ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>5 minutes</color>, So let the killing begin"));
+			wss.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>5 minutes</color>, So let the killing begin"));
 			setTimeout(function()
 			{
-				ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots"));
+				wss.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots"));
 				setTimeout(function()
 				{
-					ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>3 minutes</color>"));
+					wss.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>3 minutes</color>"));
 					setTimeout(function()
 					{
-						ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>2 minutes</color>, Not long now"));
+						wss.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>2 minutes</color>, Not long now"));
 						setTimeout(function()
 						{
-							ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>1 minute</color>, Goodbye world"));
+							wss.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>1 minute</color>, Goodbye world"));
 							setTimeout(function()
 							{
-								ws.send(createPacket("global.kickall <color=orange>Wiping Server, Relog in 5 minutes</color>"));
+								wss.send(createPacket("global.kickall <color=orange>Wiping Server, Relog in 5 minutes</color>"));
 								setTimeout(function()
 								{
-									ws.send(createPacket("quit"));
+									wss.send(createPacket("quit"));
 									//ws.send(createPacket("restart 60")); // NOTE: Don't use restart, because that doesn't actually restart the container!
 									setTimeout(function()
 									{
