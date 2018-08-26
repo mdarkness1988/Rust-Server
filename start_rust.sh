@@ -58,7 +58,7 @@ find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 
 echo "Server has now been wiped"
 
-WIPED="false"
+env WIPED="false"
 fi
 
 #################################################
@@ -69,7 +69,7 @@ fi
 #DEFAULT VARIABLES.
 #################
 
-RCONWEB="0"
+RCONWEB="1"
 
 
 #CHECHING PERFORMANCE MODE.
