@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sleep 900
+sleep 300
 while :; do
 
 #LOOKS FOR THE MAP FILE
