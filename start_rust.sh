@@ -46,6 +46,25 @@ fi
 
 ################################################
 
+#WIPE?
+################################################
+
+if [ "$WIPED" = "true" ]; then
+
+serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
+find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
+find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
+find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
+
+echo "Server has now been wiped"
+
+WIPED="false"
+
+#################################################
+
+
+
+
 #DEFAULT VARIABLES.
 #################
 

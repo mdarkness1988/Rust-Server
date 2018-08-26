@@ -120,6 +120,7 @@ ENV MAPSEED ""
 ENV SAVE_INTERVAL ""
 
 ENV WIPEDAYS ""
+ENV WIPED "false"
 
 # Start the server
 ENTRYPOINT ["./start.sh"]
