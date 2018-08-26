@@ -59,6 +59,7 @@ find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 echo "Server has now been wiped"
 
 WIPED="false"
+fi
 
 #################################################
 
