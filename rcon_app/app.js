@@ -14,7 +14,7 @@ if (argumentString.length < 1)
 	process.exit();
 }
 
-//console.log("Relaying RCON command: " + argumentString);
+console.log("Relaying RCON command: " + argumentString);
 
 var serverHostname = 'localhost';
 var serverPort = process.env.RUST_RCON_PORT;
@@ -25,6 +25,7 @@ var WebSocket = require('ws');
 var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 ws.on('open', function open()
 {
+consol.log("Rcon Connected to" + serverHostname + ":" + serverPort + "/" + serverPassword)
 	setTimeout(function()
 	{
 		messageSent = true;
@@ -34,15 +35,23 @@ ws.on('open', function open()
 			ws.close(1000);
 			setTimeout(function()
 			{
-				//console.log("Command relayed");
+				console.log("Command relayed");
 				process.exit();
 			});
 		}, 1000);
 	}, 250);
 });
+
+ws.on('close', function close()
+{
+  console.log("Rcon Connection Closed")
+});
+
+
 ws.on('message', function(data, flags)
 {
 	if (!messageSent) return;
+consol.log("Message not sent")
 	try
 	{
 		var json = JSON.parse(data);
@@ -62,6 +71,7 @@ ws.on('message', function(data, flags)
 });
 ws.on('error', function(e)
 {
+console.log("Connection Error")
 	console.log(e);
 	process.exit();
 });
