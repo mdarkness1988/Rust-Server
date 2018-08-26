@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sleep 300
+sleep 400
 while :; do
 
 #LOOKS FOR THE MAP FILE
@@ -9,16 +9,14 @@ while :; do
 mapfile="/steamcmd/rust/server/${IDENTITY}"
 filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
 
-echo "$filename  $WIPEDAYS"
-
 #IF SET WIPE DAY IS MET THEN WIPE SERVER
 ##################################
 
 if [[ $(find "$filename" -mtime +$WIPEDAYS -print) ]]; then
 echo "SERVER WIPE IN PROGRESS"
 
-node /wipe-restart_app/app.js &
 WIPED="true"
+node /wipe-restart_app/app.js &
 
 fi
 
