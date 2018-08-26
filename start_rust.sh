@@ -69,7 +69,7 @@ fi
 #DEFAULT VARIABLES.
 #################
 
-RCONWEB="1"
+RCONWEB="0"
 
 
 #CHECHING PERFORMANCE MODE.
