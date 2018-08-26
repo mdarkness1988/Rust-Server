@@ -19,6 +19,7 @@ var isRestarting = false;
 	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
 	{
+console.log("Rcon Connected...")
 		setTimeout(function()
 		{
 			ws.send(createPacket("say NOTICE: Server is wiping in, So let the killing begin"));
