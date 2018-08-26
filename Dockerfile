@@ -70,11 +70,11 @@ RUN chmod -R 777 /scheduler_app
 RUN npm install
 
 # Setup rcon command relay app
-ADD rcon_app/ /rcon_app/
-WORKDIR /rcon_app
-RUN chmod -R 777 /rcon_app
-RUN npm install
-RUN ln -s /rcon_app/app.js /usr/bin/rcon
+# ADD rcon_app/ /rcon_app/
+# WORKDIR /rcon_app
+# RUN chmod -R 777 /rcon_app
+# RUN npm install
+# RUN ln -s /rcon_app/app.js /usr/bin/rcon
 
 # Add the steamcmd installation script
 ADD install.txt /install.txt
