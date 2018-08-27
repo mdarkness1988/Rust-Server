@@ -71,8 +71,8 @@ console.log("Rcon Connected...")
 	 var packet =
 	{
 		Identifier: -1,
-	Message: command,
-		// Name: "WebRcon"
+	  Message: command,
+    Name: "WebRcon"
 	 };
 	 return JSON.stringify(packet);
  }
