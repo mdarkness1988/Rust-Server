@@ -19,22 +19,26 @@ var isRestarting = false;
 	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
 	{
-console.log("Rcon Connected...")
 		setTimeout(function()
 		{
 			ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>5 minutes</color>, Let the killing begin"));
+        console.log("5 minutes reminder sent")
 			setTimeout(function()
 			{
 				ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots"));
+          console.log("4 minutes reminder sent")
 				setTimeout(function()
 				{
 					ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>3 minutes</color>"));
+          console.log("3 minutes reminder sent")
 					setTimeout(function()
 					{
 						ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>2 minutes</color>, Not long now"));
+          console.log("2 minutes reminder sent")
 						setTimeout(function()
 						{
 							ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>1 minute</color>, Goodbye world"));
+          console.log("1 minutes reminder sent")
 							setTimeout(function()
 							{
 								ws.send(createPacket("global.kickall <color=orange>Wiping Server, Relog in 5 minutes</color>"));
