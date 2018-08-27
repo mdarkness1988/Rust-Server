@@ -22,7 +22,7 @@ var isRestarting = false;
 console.log("Rcon Connected...")
 		setTimeout(function()
 		{
-			ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Let the killing begin"));
+			ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>5 minutes</color>, Let the killing begin"));
 			setTimeout(function()
 			{
 				ws.send(createPacket("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots"));
