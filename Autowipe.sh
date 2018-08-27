@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sleep 400
+sleep 900
 while :; do
 
 #LOOKS FOR THE MAP FILE
@@ -13,12 +13,12 @@ filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
 ##################################
 
 if [[ $(find "$filename" -mtime +$WIPEDAYS -print) ]]; then
-echo "SERVER WIPE IN PROGRESS"
+echo "SERVER WIPE IN PROGRESS......."
 
 chmod +x /wipe-restart_app/app.js
 exec node /wipe-restart_app/app.js &
 
-sleep 299
+sleep 301
 
 serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
 find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
@@ -26,7 +26,6 @@ find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
 find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
 
 echo "Server has now been wiped"
-
 
 
 fi
