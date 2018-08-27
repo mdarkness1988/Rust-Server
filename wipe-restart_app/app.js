@@ -13,7 +13,7 @@ var isRestarting = false;
 
 	var serverHostname = 'localhost';
 	var serverPort = process.env.RUST_RCON_PORT;
-	var serverPassword = process.env.$RUST_RCON_PASSWORD;
+	var serverPassword = process.env.RUST_RCON_PASSWORD;
 
 	var WebSocket = require('ws');
 	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
@@ -22,7 +22,7 @@ var isRestarting = false;
 console.log("Rcon Connected...")
 		setTimeout(function()
 		{
-			ws.send("say NOTICE: Server is wiping in, So let the killing begin");
+			ws.send(JSON.stringify({command: 'test'}));
 			setTimeout(function()
 			{
 				ws.send("say <color=red>NOTICE:</color> Server is wiping in <color=orange>4 minutes</color>, Need to hear them gun shots");
@@ -65,4 +65,15 @@ console.log("Rcon Connected...")
 		}, 1000);
 	});
 
+
+# function createPacket(command)
+# {
+	# var packet =
+	# {
+	#	Identifier: -1,
+		# Message: command,
+		# Name: "WebRcon"
+	# };
+	# return JSON.stringify(packet);
+# }
 
