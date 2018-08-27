@@ -66,14 +66,14 @@ console.log("Rcon Connected...")
 	});
 
 
-# function createPacket(command)
-# {
-	# var packet =
-	# {
-	#	Identifier: -1,
-		# Message: command,
-		# Name: "WebRcon"
-	# };
-	# return JSON.stringify(packet);
-# }
+ function createPacket(command)
+ {
+	 var packet =
+	{
+		Identifier: -1,
+	Message: command,
+		// Name: "WebRcon"
+	 };
+	 return JSON.stringify(packet);
+ }
 
