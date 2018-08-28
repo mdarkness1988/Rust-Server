@@ -12,6 +12,7 @@ var request = require('request');
 
   var WebSocket = require('ws');
 	
+console.log(servername + wipedate);
 
 
 
