@@ -45,10 +45,9 @@ fi
 }
 
 ################################################
-
-
-
-#################################################
+# Trap specific signals and forward to the exit handler
+trap 'exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
+################################################
 
 
 
@@ -166,10 +165,57 @@ bash /Autowipe.sh &
 fi
 
 
-################################################
-# Trap specific signals and forward to the exit handler
-trap 'exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
-################################################
+
+#RUN WIPE TITLE
+##############
+
+if [ "$WIPE_TITLE" = "1" ]; then
+
+   mapfile="/steamcmd/rust/server/${IDENTITY}"
+   filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
+   filedate=$(date -r $filename +'%d/%m')
+   WIPED_TITLE=":  Wiped $filedate"
+   export WIPED_TITLE
+   chmod +x apps/title_app/app.js
+   ./apps/title_app/app.js &
+fi
+
+
+
+#RUN ANNOUNCEMENTS
+###################
+
+ANNOUNCE="0"
+
+if [ -z "$ANNOUNCE1" ]; then
+  if [ -z "$ANNOUNCE2" ]; then
+    if [ -z "$ANNOUNCE3" ]; then
+      if [ -z "$ANNOUNCE4" ]; then
+        if [ -z "$ANNOUNCE5" ]; then
+        echo "Announce not set"
+        else
+        ANNOUNCE="1"
+        fi
+      else
+      ANNOUNCE="1"
+      fi
+    else
+    ANNOUNCE="1"
+    fi
+  else
+  ANNOUNCE="1"
+  fi
+else
+ANNOUNCE="1"
+fi
+
+
+if [ "$ANNOUNCE" = "1" ]; then
+chmod +x apps/announce_app/app.js
+./apps/announce_app/app.js &
+fi
+
+
 
 # REMOVE OLD LOCK
 ################
@@ -421,7 +467,15 @@ else
 	/steamcmd/rust/RustDedicated -batchmode -load +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 &
 fi
 
- 
+if [ "$PUBLIC" = "1" ]; then
+upnp-delete-port "$PORTFORWARD_WEB"
+upnp-delete-port "$PORTFORWARD_RUST"
+upnp-delete-port "$RUST_RCON_PORT"
+sleep 3
+echo ""
+echo ""
+echo "Port forwarding has closed ports.."
+fi
 
 child=$!
 wait "$child"

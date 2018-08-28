@@ -21,9 +21,9 @@ RUN rm -fr /usr/share/nginx/html/* && \
 	rm -fr /etc/nginx/sites-enabled/*
 
 # COPY upnp to correct location
-COPY upnp-add-port /usr/bin/upnp-add-port
+COPY UPNP/upnp-add-port /usr/bin/upnp-add-port
 RUN chmod +x /usr/bin/upnp-add-port
-COPY upnp-delete-port /usr/bin/upnp-delete-port
+COPY UPNP/upnp-delete-port /usr/bin/upnp-delete-port
 RUN chmod +x /usr/bin/upnp-delete-port
 
 # COPY Autowipe.sh file
@@ -46,35 +46,47 @@ RUN mkdir -p /steamcmd/rust
 VOLUME ["/steamcmd/rust"]
 
 # Setup proper shutdown support
-ADD shutdown_app/ /shutdown_app/
-WORKDIR /shutdown_app
-RUN chmod -R 777 /shutdown_app
+ADD apps/shutdown_app/ /apps/shutdown_app/
+WORKDIR /apps/shutdown_app
+RUN chmod -R 777 /apps/shutdown_app
 RUN npm install
 
 # Setup restart support (for update automation)
-ADD restart_app/ /restart_app/
-WORKDIR /restart_app
-RUN chmod -R 777 /restart_app
+ADD apps/restart_app/ /apps/restart_app/
+WORKDIR /apps/restart_app
+RUN chmod -R 777 /apps/restart_app
 RUN npm install
 
 # Setup restart support (for wipe restart)
-ADD wipe-restart_app/ /wipe-restart_app/
-WORKDIR /wipe-restart_app
-RUN chmod -R 777 /wipe-restart_app
+ADD apps/wipe-restart_app/ /apps/wipe-restart_app/
+WORKDIR /apps/wipe-restart_app
+RUN chmod -R 777 /apps/wipe-restart_app
+RUN npm install
+
+# Setup announce (for auto announcements)
+ADD apps/announce_app/ /apps/announce_app/
+WORKDIR /apps/announce_app
+RUN chmod -R 777 /apps/announce_app
+RUN npm install
+
+# Setup wiped date title
+ADD apps/title_app/ /apps/title_app/
+WORKDIR /apps/title_app
+RUN chmod -R 777 /apps/title_app
 RUN npm install
 
 # Setup scheduling support
-ADD scheduler_app/ /scheduler_app/
-WORKDIR /scheduler_app
-RUN chmod -R 777 /scheduler_app
+ADD apps/scheduler_app/ /apps/scheduler_app/
+WORKDIR /apps/scheduler_app
+RUN chmod -R 777 /apps/scheduler_app
 RUN npm install
 
 # Setup rcon command relay app
-ADD rcon_app/ /rcon_app/
-WORKDIR /rcon_app
-RUN chmod -R 777 /rcon_app
+ADD apps/rcon_app/ /apps/rcon_app/
+WORKDIR /apps/rcon_app
+RUN chmod -R 777 /apps/rcon_app
 RUN npm install
-RUN ln -s /rcon_app/app.js /usr/bin/rcon
+RUN ln -s /apps/rcon_app/app.js /usr/bin/rcon
 
 # Add the steamcmd installation script
 ADD install.txt /install.txt
@@ -119,8 +131,16 @@ ENV PVE ""
 ENV MAPSEED ""
 ENV SAVE_INTERVAL ""
 
+# Rcon used variables
 ENV WIPEDAYS ""
-ENV WIPED "false"
+ENV WIPE_TITLE ""
+
+ENV ANNOUNCE_DELAY ""
+ENV ANNOUNCE1 ""
+ENV ANNOUNCE2 ""
+ENV ANNOUNCE3 ""
+ENV ANNOUNCE4 ""
+ENV ANNOUNCE5 ""
 
 # Start the server
 ENTRYPOINT ["./start.sh"]
