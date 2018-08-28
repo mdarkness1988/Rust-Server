@@ -11,12 +11,13 @@ var request = require('request');
    var wipedate = process.env.WIPED_TITLE;
 
   var WebSocket = require('ws');
-	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+	
 
 
 
 setTimeout(function()
 {
+   var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
 	{
 		setTimeout(function()
