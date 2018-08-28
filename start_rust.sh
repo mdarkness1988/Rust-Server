@@ -467,6 +467,11 @@ else
 	/steamcmd/rust/RustDedicated -batchmode -load +server.port "$PORTFORWARD_RUST" +server.identity "$IDENTITY" +server.seed "$MAPSEED" +server.hostname "$NAME" +server.url "$WEBURL" +server.headerimage "$BANNER" +server.description "$DESCRIPTION" +server.worldsize "$MPSIZE" +server.maxplayers "$PLAYERS" +fps.limit "$FPS" +server.secure "$SECURE" +server.updatebatch "$UPDATEBATCH" +server.saveinterval "$SAVE_INTERVAL" +server.tickrate "$TICKRATE" +ai.tickrate "$AI_TICKRATE" server.port "$SERVERPORT" +server.pve "$PVE_" $RUST_STARTUP_COMMAND 2>&1 &
 fi
 
+
+
+child=$!
+wait "$child"
+
 if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
@@ -476,9 +481,6 @@ echo ""
 echo ""
 echo "Port forwarding has closed ports.."
 fi
-
-child=$!
-wait "$child"
   
 
 pkill -f nginx
