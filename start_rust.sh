@@ -33,7 +33,7 @@ fi
 	fi
 	
 	# Execute the RCON shutdown command
-	node /shutdown_app/app.js
+	node /apps/shutdown_app/app.js
 	sleep 5
 
 	pkill -f nginx
@@ -161,7 +161,7 @@ echo "Auto wipe has been set to wipe every $WIPEDAYS days"
 echo ""
 echo ""
 chmod +x Autowipe.sh
-bash /Autowipe.sh &
+./Autowipe.sh &
 fi
 
 
