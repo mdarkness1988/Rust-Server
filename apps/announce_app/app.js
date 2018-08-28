@@ -15,12 +15,12 @@ var request = require('request');
    var delay = process.env.ANNOUNCE_DELAY;
 
   var WebSocket = require('ws');
-	
+	var ws = "";
 
 
 setTimeout(function()
 {
-   var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+   ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
   {
 		setTimeout(function()
