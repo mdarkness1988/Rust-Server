@@ -14,13 +14,13 @@ var request = require('request');
    var announce5_ = process.env.ANNOUNCE5;
    var delay = process.env.ANNOUNCE_DELAY;
 
-
   var WebSocket = require('ws');
-	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+	
 
 
 setTimeout(function()
 {
+   var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 	ws.on('open', function open()
   {
 		setTimeout(function()
