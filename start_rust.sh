@@ -446,7 +446,7 @@ fi
 ###########
 
 echo "Starting scheduled task manager.."
-node /scheduler_app/app.js &
+node /apps/scheduler_app/app.js &
 
 
 
