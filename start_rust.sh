@@ -178,6 +178,7 @@ if [ "$WIPE_TITLE" = "1" ]; then
    export WIPED_TITLE
    chmod +x apps/title_app/app.js
    ./apps/title_app/app.js &
+   echo "$WIPED_TITLE Bash"
 fi
 
 
