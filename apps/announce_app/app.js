@@ -28,31 +28,31 @@ setTimeout(function()
        if (announce1_)
        {
 			  ws.send(createPacket("say " + announce1_));
-          console.log(”Sent Announcement: (" + announce1_ + ")")
+          console.log("Sent Announcement: (" + announce1_ + ")")
 	   		setTimeout(function()
 			  {
             if (announce2_)
             {
 			    	  ws.send(createPacket("say " + announce2_));
-              console.log(”Sent Announcement: (" + announce2_ + ")")
+              console.log("Sent Announcement: (" + announce2_ + ")")
 			   	  setTimeout(function()
 				    {
                 if (announce3_)
                 {
 					      ws.send(createPacket("say " + announce3_));
-                  console.log(”Sent Announcement: (" + announce3_ + ")")
+                  console.log("Sent Announcement: (" + announce3_ + ")")
 					      setTimeout(function()
 					      {
                      if (announce4_)
                     {
 						       ws.send(createPacket("say " + announce4_));
-                      console.log(”Sent Announcement: (" + announce4_ + ")")
+                      console.log("Sent Announcement: (" + announce4_ + ")")
 				            setTimeout(function()
 						       {
                         if (announce5_)
                         {
 							         ws.send(createPacket("say " + announce5_));
-                           console.log(”Sent Announcement: (" + announce5_ + ")")
+                           console.log("Sent Announcement: (" + announce5_ + ")")
 		                     setTimeout(function()
 						           {
                             loop();
