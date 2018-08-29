@@ -174,11 +174,11 @@ if [ "$WIPE_TITLE" = "1" ]; then
    mapfile="/steamcmd/rust/server/${IDENTITY}"
    filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
    filedate=$(date -r $filename +'%d/%m')
-   WIPED_TITLE=":  Wiped $filedate"
+   WIPED_TITLE="server.hostname $NAME:  Wiped $filedate"
    export WIPED_TITLE
    chmod +x apps/title_app/app.js
    ./apps/title_app/app.js &
-   echo "$WIPED_TITLE Bash"
+   echo "$WIPED_TITLE"
 fi
 
 
