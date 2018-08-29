@@ -26,7 +26,7 @@ setTimeout(function()
         setTimeout(function()
 			 {
 				 ws.close(1000);
-	      }, 1000 * 2);
+	      }, 1000 * 20);
 		}, 1000);
 	});
 }, 1000 * 60 * 10);
