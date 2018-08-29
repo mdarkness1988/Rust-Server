@@ -12,7 +12,6 @@ var request = require('request');
 
   var WebSocket = require('ws');
 	
-console.log(servername + wipedate);
 
 
 
@@ -23,7 +22,7 @@ setTimeout(function()
 	{
 		setTimeout(function()
 		{
-			ws.send(createPacket("server.hostname " + servername + wipedate));
+			ws.send(createPacket(wipedate));
         setTimeout(function()
 			 {
 				 ws.close(1000);
