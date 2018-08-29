@@ -455,7 +455,7 @@ else
 fi
 
 
-sleep 180
+sleep 60
 
 #RUN WIPE TITLE
 ##############
