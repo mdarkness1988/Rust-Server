@@ -5,8 +5,8 @@ var request = require('request');
 
 
 	var serverHostname = 'localhost';
-	var serverPort = process.env.RUST_RCON_PORT;
-	var serverPassword = process.env.RUST_RCON_PASSWORD;
+	var serverPort = process.env.PORTFORWARD_RCON;
+	var serverPassword = process.env.PASSWORD;
    var announce1_ = process.env.ANNOUNCE1;
    var announce2_ = process.env.ANNOUNCE2;
    var announce3_ = process.env.ANNOUNCE3;
