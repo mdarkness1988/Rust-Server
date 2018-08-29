@@ -26,7 +26,7 @@ RUN chmod +x /usr/bin/upnp-add-port
 COPY UPNP/upnp-delete-port /usr/bin/upnp-delete-port
 RUN chmod +x /usr/bin/upnp-delete-port
 
-COPY /wipe /wipe
+COPY wipe /wipe
 
 # COPY Autowipe.sh file
 COPY Autowipe.sh /Autowipe.sh
