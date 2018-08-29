@@ -143,5 +143,8 @@ ENV ANNOUNCE3 ""
 ENV ANNOUNCE4 ""
 ENV ANNOUNCE5 ""
 
+# Not used in docker template
+ENV WIPED ""
+
 # Start the server
 ENTRYPOINT ["./start.sh"]

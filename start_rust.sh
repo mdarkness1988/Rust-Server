@@ -56,6 +56,8 @@ trap 'exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
 #################
 
 RCONWEB="1"
+WIPED="false"
+export WIPED
 
 
 #CHECHING PERFORMANCE MODE.
@@ -151,6 +153,7 @@ sleep 3
 fi
 
 
+
 #RUN AUTO WIPE
 ##############
 
@@ -208,6 +211,7 @@ if [ -z "$ANNOUNCE1" ]; then
 else
 ANNOUNCE="1"
 fi
+
 
 
 if [ "$ANNOUNCE" = "1" ]; then
@@ -469,6 +473,8 @@ fi
 
 
 
+
+
 child=$!
 wait "$child"
 
@@ -480,6 +486,19 @@ sleep 3
 echo ""
 echo ""
 echo "Port forwarding has closed ports.."
+fi
+
+
+
+if [ "$WIPED" = "true" ]; then
+serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
+find "${serveridentitydir:?}" -type f -name "proceduralmap.*.sav" -delete
+find "${serveridentitydir:?}" -type f -name "proceduralmap.*.map" -delete
+find "${serveridentitydir:?}" -type f -name "player.blueprints.*.db" -delete
+
+
+echo "SERVER HAS NOW BEEN WIPED"
+
 fi
   
 
