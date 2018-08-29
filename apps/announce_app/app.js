@@ -30,8 +30,6 @@ function connection()
 
 function myTimer()
 {
-     setTimeout(function()
-	  {
        if (announce1_)
        {
 			  ws.send(createPacket("say " + announce1_));
@@ -95,7 +93,6 @@ function myTimer()
       console.log("Announcement has stopped")
       ws.close(1000);
     }
-  }, 1000 * 60 * delaytime);
 }
 
 
