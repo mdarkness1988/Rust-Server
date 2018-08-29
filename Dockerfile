@@ -33,6 +33,11 @@ COPY Autowipe.sh /Autowipe.sh
 RUN chmod +x /Autowipe.sh
 
 
+# COPY title.sh file
+COPY title.sh /title.sh
+RUN chmod +x /title.sh
+
+
 # Install webrcon (specific commit)
 COPY nginx_rcon.conf /etc/nginx/nginx.conf
 RUN curl -sL https://github.com/Facepunch/webrcon/archive/24b0898d86706723d52bb4db8559d90f7c9e069b.zip | bsdtar -xvf- -C /tmp && \
