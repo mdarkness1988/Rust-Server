@@ -62,25 +62,25 @@ setTimeout(function()
                        {
                          loop();
                        }
-						      }, 1000 * 60 * delay);
+						      }, 1000 * 60 * 8);
                    }
                    else
                   {
                     loop();
                   }
-                }, 1000 * 60 * delay);
+                }, 1000 * 60 * 8);
               }
               else
              {
                loop();
              }
-				 }, 1000 * 60 * delay);
+				 }, 1000 * 60 * 8);
          }
          else
          {
            loop();
          }
-       }, 1000 * 60 * delay);
+       }, 1000 * 60 * 8);
      }
      else
     {
@@ -115,6 +115,6 @@ function loop()
 ws.close(1000);
 setTimeout(function()
   {
-  ws.open(1000);
-  }, 1000 * 2);
+    ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+  }, 1000 * 3);
 }
