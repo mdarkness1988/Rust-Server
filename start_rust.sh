@@ -8,7 +8,7 @@ exit_handler()
 if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
-upnp-delete-port "$RUST_RCON_PORT"
+upnp-delete-port "$PORTFORWARD_RCON"
 sleep 3
 echo ""
 echo ""
@@ -138,7 +138,7 @@ echo "Port forwarding was enabled"
 echo "Starting Port Forwarding....."
 upnp-add-port "$PORTFORWARD_WEB"
 upnp-add-port "$PORTFORWARD_RUST"
-upnp-add-port "$RUST_RCON_PORT"
+upnp-add-port "$PORTFORWARD_RCON"
 sleep 3
 echo "Port forwarding has opened ports"
 sleep 2
@@ -339,11 +339,11 @@ fi
 ############################
 
 RUST_STARTUP_COMMAND=$ARGUMENTS
-if [ ! -z ${RUST_RCON_PORT+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $RUST_RCON_PORT"
+if [ ! -z ${PORTFORWARD_RCON+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.port $PORTFORWARD_RCON"
 fi
-if [ ! -z ${RUST_RCON_PASSWORD+x} ]; then
-	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $RUST_RCON_PASSWORD"
+if [ ! -z ${PASSWORD+x} ]; then
+	RUST_STARTUP_COMMAND="$RUST_STARTUP_COMMAND +rcon.password $PASSWORD"
 fi
 
 if [ ! -z ${RCONWEB+x} ]; then
@@ -437,6 +437,14 @@ node /apps/scheduler_app/app.js &
 
 
 
+#RUN WIPE TITLE
+##############
+
+ i f   [   " $ W I P E _ T I T L E "   =   " 1 "   ] ;   t h e n 
+./title.sh &
+fi
+
+
 # SET THE WORKING DIRECTORY
 ########################
 
@@ -455,21 +463,7 @@ else
 fi
 
 
-sleep 60
 
-#RUN WIPE TITLE
-##############
-
-if [ "$WIPE_TITLE" = "1" ]; then
-
-   mapfile="/steamcmd/rust/server/${IDENTITY}"
-   filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
-   filedate=$(date -r $filename +'%d/%m')
-   WIPED_TITLE="server.hostname \"$NAME:  Wiped $filedate\""
-   export WIPED_TITLE
-   chmod +x apps/title_app/app.js
-   ./apps/title_app/app.js &
-fi
 
 
 
@@ -479,7 +473,7 @@ wait "$child"
 if [ "$PUBLIC" = "1" ]; then
 upnp-delete-port "$PORTFORWARD_WEB"
 upnp-delete-port "$PORTFORWARD_RUST"
-upnp-delete-port "$RUST_RCON_PORT"
+upnp-delete-port "$PORTFORWARD_RCON"
 sleep 3
 echo ""
 echo ""
