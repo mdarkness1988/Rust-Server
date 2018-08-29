@@ -56,8 +56,7 @@ trap 'exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
 #################
 
 RCONWEB="1"
-WIPED="false"
-export WIPED
+echo "false" >/wipe
 
 
 #CHECHING PERFORMANCE MODE.
@@ -489,6 +488,7 @@ echo "Port forwarding has closed ports.."
 fi
 
 
+WIPED=$(<wipe)
 
 if [ "$WIPED" = "true" ]; then
 serveridentitydir="/steamcmd/rust/server/${IDENTITY}"

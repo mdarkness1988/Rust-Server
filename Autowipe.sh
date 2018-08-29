@@ -14,8 +14,7 @@ filename=$(find "${mapfile:?}" -type f -name "proceduralmap.*.map" -print)
 
 if [[ $(find "$filename" -mtime +$WIPEDAYS -print) ]]; then
 echo "SERVER WIPE IN PROGRESS......."
-WIPED="true"
-export $WIPED
+echo "true" >/wipe
 chmod +x /apps/wipe-restart_app/app.js
 ./apps/wipe-restart_app/app.js
 fi
