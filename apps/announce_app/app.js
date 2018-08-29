@@ -13,18 +13,25 @@ var request = require('request');
    var announce4_ = process.env.ANNOUNCE4;
    var announce5_ = process.env.ANNOUNCE5;
    var delaytime = process.env.ANNOUNCE_DELAY;
+   var myVar1 = setTimeout(connection, 1000 * 60 * 7);
+   var myVar = setTimeout(myTimer, 1000 * 60 * 9);
+
 
   var WebSocket = require('ws');
 	var ws = "";
 
 
-setTimeout(function()
+function connection()
 {
-   ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
-	ws.on('open', function open()
-  {
-		setTimeout(function()
-		{
+  ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
+}
+
+
+
+function myTimer()
+{
+     setTimeout(function()
+	  {
        if (announce1_)
        {
 			  ws.send(createPacket("say " + announce1_));
@@ -55,30 +62,30 @@ setTimeout(function()
                            console.log("Sent Announcement: (" + announce5_ + ")")
 		                     setTimeout(function()
 						           {
-                            loop();
-                          }, 1000);
+                            setTimeout(myTimer);
+                          }, 1000 * 5);
 						         }
                        else
                        {
-                         loop();
+                         setTimeout(myTimer);
                        }
 						      }, 1000 * 60 * delaytime);
                    }
                    else
                   {
-                    loop();
+                    setTimeout(myTimer);
                   }
                 }, 1000 * 60 * delaytime);
               }
               else
              {
-               loop();
+               setTimeout(myTimer);
              }
 				 }, 1000 * 60 * delaytime);
          }
          else
          {
-           loop();
+           setTimeout(myTimer);
          }
        }, 1000 * 60 * delaytime);
      }
@@ -89,8 +96,7 @@ setTimeout(function()
       ws.close(1000);
     }
   }, 1000 * 60 * delaytime);
-});
-}, 1000 * 60 * 8);
+}
 
 
 
@@ -107,14 +113,3 @@ setTimeout(function()
  }
 
 
-
-//Loop Announcement
-
-function loop()
-{
-ws.close(1000);
-setTimeout(function()
-  {
-    ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
-  }, 1000 * 3);
-}
