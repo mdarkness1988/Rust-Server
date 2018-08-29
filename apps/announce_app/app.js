@@ -12,7 +12,7 @@ var request = require('request');
    var announce3_ = process.env.ANNOUNCE3;
    var announce4_ = process.env.ANNOUNCE4;
    var announce5_ = process.env.ANNOUNCE5;
-   var delay = process.env.ANNOUNCE_DELAY;
+   var delaytime = process.env.ANNOUNCE_DELAY;
 
   var WebSocket = require('ws');
 	var ws = "";
@@ -62,25 +62,25 @@ setTimeout(function()
                        {
                          loop();
                        }
-						      }, 1000 * 60 * 8);
+						      }, 1000 * 60 * delaytime);
                    }
                    else
                   {
                     loop();
                   }
-                }, 1000 * 60 * 8);
+                }, 1000 * 60 * delaytime);
               }
               else
              {
                loop();
              }
-				 }, 1000 * 60 * 8);
+				 }, 1000 * 60 * delaytime);
          }
          else
          {
            loop();
          }
-       }, 1000 * 60 * 8);
+       }, 1000 * 60 * delaytime);
      }
      else
     {
