@@ -5,8 +5,8 @@ var request = require('request');
 
 
 	var serverHostname = 'localhost';
-	var serverPort = process.env.RUST_RCON_PORT;
-	var serverPassword = process.env.RUST_RCON_PASSWORD;
+	var serverPort = process.env.PORTFORWARD_RCON;
+	var serverPassword = process.env.PASSWORD;
 
   var WebSocket = require('ws');
 	var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
