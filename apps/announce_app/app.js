@@ -88,9 +88,9 @@ setTimeout(function()
       console.log("Announcement has stopped")
       ws.close(1000);
     }
-  }, 1000);
+  }, 1000 * 60 * delaytime);
 });
-}, 1000 * 60 * 12);
+}, 1000 * 60 * 8);
 
 
 
