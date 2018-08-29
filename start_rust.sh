@@ -488,7 +488,7 @@ echo "Port forwarding has closed ports.."
 fi
 
 
-WIPED=$(<wipe)
+WIPED=$(</wipe)
 
 if [ "$WIPED" = "true" ]; then
 serveridentitydir="/steamcmd/rust/server/${IDENTITY}"
