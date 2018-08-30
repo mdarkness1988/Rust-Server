@@ -441,6 +441,7 @@ node /apps/scheduler_app/app.js &
 ##############
 
  i f   [   " $ W I P E _ T I T L E "   =   " 1 "   ] ;   t h e n 
+ c h m o d   + x  title.sh
 ./title.sh &
 fi
 
