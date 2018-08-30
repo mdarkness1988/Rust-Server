@@ -2,7 +2,7 @@
 
 
 var request = require('request');
-
+var isRestarting = true;
 
 	var serverHostname = 'localhost';
 	var serverPort = process.env.PORTFORWARD_RCON;
@@ -42,7 +42,7 @@ var request = require('request');
 									setTimeout(function()
 									{
 										ws.close(1000);
-
+                         isRestarting = false;
 										// After 2 minutes, if the server's still running, forcibly shut it down
 										setTimeout(function()
 										{
