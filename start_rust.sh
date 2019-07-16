@@ -56,10 +56,6 @@ compilerdir="/steamcmd/rust"
 
 if [ -f "/steamcmd/rust/Compiler.x86_x64" ]; then
   find "${compilerdir:?}" -type f -name "Compiler.x86_x64" -delete
- 2>&1 /dev/null
-  elif [ -f "/steamcmd/rust/CSharpCompiler.x86_x64" ]; then
-  find "${compilerdir:?}" -type f -name "CSharpCompiler.x86_x64" -delete
- 2>&1 /dev/null
 fi
 
 
