@@ -25,7 +25,7 @@ var WebSocket = require('ws');
 var ws = new WebSocket("ws://" + serverHostname + ":" + serverPort + "/" + serverPassword);
 ws.on('open', function open()
 {
-consol.log("Rcon Connected to" + serverHostname + ":" + serverPort + "/" + serverPassword)
+console.log("Rcon Connected to" + serverHostname + ":" + serverPort + "/" + serverPassword)
 	setTimeout(function()
 	{
 		messageSent = true;
@@ -51,7 +51,7 @@ ws.on('close', function close()
 ws.on('message', function(data, flags)
 {
 	if (!messageSent) return;
-consol.log("Message not sent")
+console.log("Message not sent")
 	try
 	{
 		var json = JSON.parse(data);
